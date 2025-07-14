@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kolb Learning Style Inventory - Balance UNHAS</title>
+    <title>Inventori Gaya Belajar Kolb</title>
     <style>
         * {
             margin: 0;
@@ -16,12 +16,12 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             color: #333;
+            padding: 20px;
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
-            padding: 20px;
         }
 
         .header {
@@ -39,57 +39,12 @@
             margin-bottom: 10px;
         }
 
-        .header p {
-            color: #718096;
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-
-        .nav-tabs {
-            display: flex;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 5px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-tab {
-            flex: 1;
-            padding: 15px;
-            text-align: center;
-            background: transparent;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            color: #4a5568;
-        }
-
-        .nav-tab.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .tab-content {
-            display: none;
+        .content-box {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.3s ease;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            margin-bottom: 20px;
         }
 
         .question-container {
@@ -103,52 +58,50 @@
         .question-number {
             font-weight: bold;
             color: #667eea;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             font-size: 1.1rem;
         }
 
         .question-text {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             margin-bottom: 20px;
-            line-height: 1.6;
+            font-weight: bold;
+            color: #4a5568;
         }
 
-        .options-grid {
+        .options-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
         }
 
         .option-item {
-            position: relative;
-        }
-
-        .option-item input[type="radio"] {
-            display: none;
-        }
-
-        .option-item label {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             padding: 15px;
             background: white;
             border: 2px solid #e2e8f0;
             border-radius: 10px;
-            cursor: pointer;
             transition: all 0.3s ease;
-            text-align: center;
-            font-weight: 500;
         }
 
-        .option-item input[type="radio"]:checked + label {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-color: #667eea;
-            transform: translateY(-2px);
-        }
-
-        .option-item label:hover {
+        .option-item:hover {
             border-color: #667eea;
             transform: translateY(-1px);
+        }
+
+        .option-text {
+            flex: 1;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .option-select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            min-width: 180px;
         }
 
         .progress-bar {
@@ -188,6 +141,12 @@
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
         .btn-secondary {
             background: #e2e8f0;
             color: #4a5568;
@@ -196,6 +155,29 @@
         .btn-secondary:hover {
             background: #cbd5e0;
             transform: translateY(-1px);
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .alert-warning {
+            background: #fef5e7;
+            color: #744210;
+            border: 1px solid #f6e05e;
+        }
+
+        .alert-success {
+            background: #f0fff4;
+            color: #22543d;
+            border: 1px solid #68d391;
+        }
+
+        .hidden {
+            display: none;
         }
 
         .results-container {
@@ -208,7 +190,7 @@
             padding: 30px;
             border-radius: 20px;
             margin: 20px 0;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
         }
 
@@ -231,6 +213,7 @@
             font-weight: bold;
             color: #4a5568;
             margin-bottom: 10px;
+            font-size: 0.9rem;
         }
 
         .score-value {
@@ -239,105 +222,67 @@
             color: #667eea;
         }
 
+        .matrix-analysis {
+            background: #f0f8ff;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 2px solid #4299e1;
+        }
+
         .style-description {
             background: #f8fafc;
             padding: 25px;
             border-radius: 15px;
             margin: 20px 0;
             line-height: 1.6;
+            text-align: left;
         }
 
-        .info-section {
-            margin-bottom: 30px;
+        .breakdown-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
         }
 
-        .info-section h3 {
-            color: #4a5568;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-        }
-
-        .info-section p {
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .learning-cycle {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .cycle-item {
-            background: #f8fafc;
-            padding: 20px;
-            border-radius: 15px;
-            border-left: 5px solid #667eea;
-        }
-
-        .cycle-item h4 {
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-
-        .style-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .style-card {
-            background: #f8fafc;
-            padding: 25px;
-            border-radius: 15px;
-            border: 2px solid #e2e8f0;
-            transition: transform 0.3s ease;
-        }
-
-        .style-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .style-card h4 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .alert {
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
+        .breakdown-table th,
+        .breakdown-table td {
+            padding: 12px;
+            border: 1px solid #e2e8f0;
             text-align: center;
         }
 
-        .alert-warning {
-            background: #fef5e7;
-            color: #744210;
-            border: 1px solid #f6e05e;
+        .breakdown-table th {
+            background: #f8fafc;
+            font-weight: bold;
+        }
+
+        .breakdown-table .total-row {
+            background: #f0f8ff;
+            font-weight: bold;
+        }
+
+        .navigation-buttons {
+            text-align: center;
+            margin-top: 20px;
         }
 
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            
             .header h1 {
                 font-size: 2rem;
             }
             
-            .nav-tabs {
-                flex-direction: column;
-            }
-            
-            .options-grid {
+            .scores-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .option-item {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .option-select {
+                min-width: 100%;
             }
         }
     </style>
@@ -345,331 +290,342 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Kolb Learning Style Inventory</h1>
-            <p>Discover your unique learning style through David Kolb's experiential learning theory. This assessment will help you understand how you prefer to learn and process information.</p>
+            <h1>Inventori Gaya Belajar Kolb</h1>
+            <p>Temukan gaya belajar unik Anda melalui teori pembelajaran eksperiensial David Kolb</p>
         </div>
 
-        <div class="nav-tabs">
-            <button class="nav-tab active" onclick="showTab('assessment')">Assessment</button>
-            <button class="nav-tab" onclick="showTab('about')">About Kolb</button>
-            <button class="nav-tab" onclick="showTab('styles')">Learning Styles</button>
-            <button class="nav-tab" onclick="showTab('results')" id="results-tab" style="display: none;">Results</button>
+        <!-- Assessment Section -->
+        <div id="assessment-section" class="content-box">
+            <h2>Asesmen Gaya Belajar</h2>
+            <p>Anda akan disajikan 12 skenario pembelajaran. Untuk setiap skenario, beri peringkat pada empat pilihan dari 4 (paling sesuai dengan Anda) hingga 1 (paling tidak sesuai dengan Anda).</p>
+            
+            <div class="alert alert-warning">
+                <strong>Petunjuk:</strong> Beri peringkat setiap pilihan dari 1 (paling tidak sesuai) hingga 4 (paling sesuai). Gunakan setiap nomor tepat sekali untuk setiap pertanyaan.
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+
+            <div id="question-container">
+                <!-- Questions will be loaded here -->
+            </div>
+
+            <div class="navigation-buttons">
+                <button class="btn btn-secondary" id="prev-btn" onclick="previousQuestion()" disabled>Sebelumnya</button>
+                <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" disabled>Selanjutnya</button>
+            </div>
+
+            <div id="status-message"></div>
         </div>
 
-        <div id="assessment-tab" class="tab-content active">
-            <div id="assessment-intro">
-                <h2>Learning Style Assessment</h2>
-                <p>You will be presented with 12 scenarios. For each scenario, rank the four options from 4 (most like you) to 1 (least like you). Be honest and choose based on how you actually behave, not how you think you should behave.</p>
-                <div class="alert alert-warning">
-                    <strong>Important:</strong> Rank each option 1-4, with 4 being most like you and 1 being least like you. Each number should be used exactly once per question.
+        <!-- Results Section -->
+        <div id="results-section" class="content-box hidden">
+            <div class="results-container">
+                <h2>Hasil Gaya Belajar Anda</h2>
+                
+                <div class="learning-style-result" id="learning-style-display">
+                    <!-- Results will be displayed here -->
                 </div>
-                <button class="btn btn-primary" onclick="startAssessment()">Start Assessment</button>
-            </div>
 
-            <div id="assessment-questions" class="hidden">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill"></div>
+                <div class="scores-grid">
+                    <div class="score-item">
+                        <div class="score-label">Pengalaman Konkret (PE)</div>
+                        <div class="score-value" id="ce-score">0</div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">Observasi Reflektif (OR)</div>
+                        <div class="score-value" id="ro-score">0</div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">Konseptualisasi Abstrak (KA)</div>
+                        <div class="score-value" id="ac-score">0</div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">Eksperimentasi Aktif (EA)</div>
+                        <div class="score-value" id="ae-score">0</div>
+                    </div>
                 </div>
-                <div id="question-container"></div>
-                <div style="text-align: center; margin-top: 20px;">
-                    <button class="btn btn-secondary" onclick="previousQuestion()" id="prev-btn" disabled>Previous</button>
-                    <button class="btn btn-primary" onclick="nextQuestion()" id="next-btn">Next</button>
-                </div>
-            </div>
 
-            <div id="assessment-complete" class="hidden">
-                <div class="results-container">
-                    <h2>Assessment Complete!</h2>
-                    <button class="btn btn-primary" onclick="calculateResults()">View Your Results</button>
+                <div class="matrix-analysis">
+                    <h3>Analisis Matriks LSI</h3>
+                    <div class="scores-grid">
+                        <div class="score-item" style="background: #e6f3ff; border: 2px solid #4299e1;">
+                            <div class="score-label">KA - PE (Abstrak vs Konkret)</div>
+                            <div class="score-value" id="ac-ce-score">0</div>
+                            <small style="color: #666;">
+                                Positif: Preferensi pemikiran abstrak<br>
+                                Negatif: Preferensi pengalaman konkret
+                            </small>
+                        </div>
+                        <div class="score-item" style="background: #f0fff4; border: 2px solid #48bb78;">
+                            <div class="score-label">EA - OR (Aktif vs Reflektif)</div>
+                            <div class="score-value" id="ae-ro-score">0</div>
+                            <small style="color: #666;">
+                                Positif: Preferensi eksperimentasi aktif<br>
+                                Negatif: Preferensi observasi reflektif
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <div style="margin: 20px 0; padding: 20px; background: #f8fafc; border-radius: 15px; border-left: 5px solid #667eea;">
+                        <h4>Interpretasi Matriks</h4>
+                        <p><strong>Posisi Anda:</strong> <span id="matrix-position">(0, 0)</span></p>
+                        <p><strong>Kuadran:</strong> <span id="quadrant-info">Akan ditentukan</span></p>
+                        <p><strong>Jarak dari pusat:</strong> <span id="distance-info">0</span></p>
+                    </div>
                 </div>
-            </div>
-        </div>
 
-        <div id="about-tab" class="tab-content">
-            <div class="info-section">
-                <h3>About David Kolb's Learning Theory</h3>
-                <p>David Kolb's Experiential Learning Theory (ELT) is based on the idea that learning is a process whereby knowledge is created through the transformation of experience. According to Kolb, effective learning occurs when a person progresses through a cycle of four stages.</p>
-            </div>
+                <div class="style-description" id="style-description">
+                    <!-- Style description will be filled by JavaScript -->
+                </div>
 
-            <div class="learning-cycle">
-                <div class="cycle-item">
-                    <h4>Concrete Experience (CE)</h4>
-                    <p>Learning through direct experience and feeling. This involves being immersed in a new experience and learning through hands-on activities.</p>
+                <div class="style-description">
+                    <h3>Rincian Skor</h3>
+                    <table class="breakdown-table">
+                        <thead>
+                            <tr>
+                                <th>Pertanyaan</th>
+                                <th>PE</th>
+                                <th>OR</th>
+                                <th>KA</th>
+                                <th>EA</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakdown-tbody">
+                            <!-- Will be filled by JavaScript -->
+                        </tbody>
+                    </table>
                 </div>
-                <div class="cycle-item">
-                    <h4>Reflective Observation (RO)</h4>
-                    <p>Learning through watching and reflecting. This involves observing experiences from different perspectives and reflecting on what happened.</p>
-                </div>
-                <div class="cycle-item">
-                    <h4>Abstract Conceptualization (AC)</h4>
-                    <p>Learning through thinking and analysis. This involves understanding concepts, theories, and ideas through logical analysis.</p>
-                </div>
-                <div class="cycle-item">
-                    <h4>Active Experimentation (AE)</h4>
-                    <p>Learning through doing and testing. This involves actively experimenting with new ideas and testing theories in practice.</p>
-                </div>
-            </div>
 
-            <div class="info-section">
-                <h3>The Learning Cycle</h3>
-                <p>Kolb's learning cycle suggests that effective learning occurs when learners move through all four stages. However, individuals tend to have preferences for certain stages, which determines their learning style.</p>
-            </div>
-        </div>
-
-        <div id="styles-tab" class="tab-content">
-            <div class="info-section">
-                <h3>The Four Learning Styles</h3>
-                <p>Based on your preferences in the learning cycle, you'll fall into one of four learning styles:</p>
-            </div>
-
-            <div class="style-grid">
-                <div class="style-card">
-                    <h4>Accommodator (CE + AE)</h4>
-                    <p><strong>Characteristics:</strong> Hands-on, intuitive, relies on others for information</p>
-                    <p><strong>Learns best through:</strong> Doing, trial and error, group work</p>
-                    <p><strong>Careers:</strong> Sales, marketing, management</p>
-                </div>
-                <div class="style-card">
-                    <h4>Diverger (CE + RO)</h4>
-                    <p><strong>Characteristics:</strong> Imaginative, good at generating ideas, people-oriented</p>
-                    <p><strong>Learns best through:</strong> Group discussions, brainstorming, feedback</p>
-                    <p><strong>Careers:</strong> Counseling, teaching, arts</p>
-                </div>
-                <div class="style-card">
-                    <h4>Assimilator (AC + RO)</h4>
-                    <p><strong>Characteristics:</strong> Logical, theoretical, prefers concepts over people</p>
-                    <p><strong>Learns best through:</strong> Reading, lectures, research</p>
-                    <p><strong>Careers:</strong> Science, research, academia</p>
-                </div>
-                <div class="style-card">
-                    <h4>Converger (AC + AE)</h4>
-                    <p><strong>Characteristics:</strong> Practical, focused, good at problem-solving</p>
-                    <p><strong>Learns best through:</strong> Practical application, simulations, labs</p>
-                    <p><strong>Careers:</strong> Engineering, technology, medicine</p>
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="resetAssessment()">Ulangi Asesmen</button>
+                    <button class="btn btn-secondary" onclick="printResults()">Simpan Hasil</button>
                 </div>
             </div>
-        </div>
-
-        <div id="results-tab" class="tab-content">
-            <div id="results-content"></div>
         </div>
     </div>
 
     <script>
-        // Kolb LSI Questions
+        // 12 Pertanyaan Kolb LSI dalam Bahasa Indonesia
         const questions = [
             {
-                scenario: "When I learn:",
+                scenario: "Ketika saya belajar:",
                 options: {
-                    CE: "I like to deal with my feelings",
-                    RO: "I like to watch and listen",
-                    AC: "I like to think about ideas",
-                    AE: "I like to be doing things"
+                    CE: "Saya suka berurusan dengan perasaan saya",
+                    RO: "Saya suka mengamati dan mendengarkan",
+                    AC: "Saya suka memikirkan ide-ide",
+                    AE: "Saya suka melakukan sesuatu"
                 }
             },
             {
-                scenario: "I learn best when:",
+                scenario: "Saya belajar dengan baik ketika:",
                 options: {
-                    CE: "I rely on my hunches and feelings",
-                    RO: "I listen and watch carefully",
-                    AC: "I rely on logical thinking",
-                    AE: "I trust my hunches and take risks"
+                    CE: "Saya mengandalkan firasat dan perasaan saya",
+                    RO: "Saya mendengarkan dan mengamati dengan cermat",
+                    AC: "Saya mengandalkan pemikiran logis",
+                    AE: "Saya mempercayai firasat dan mengambil risiko"
                 }
             },
             {
-                scenario: "When I am learning:",
+                scenario: "Ketika saya sedang belajar:",
                 options: {
-                    CE: "I have strong feelings and reactions",
-                    RO: "I am quiet and reserved",
-                    AC: "I tend to reason things out",
-                    AE: "I am responsible about things"
+                    CE: "Saya memiliki perasaan dan reaksi yang kuat",
+                    RO: "Saya tenang dan pendiam",
+                    AC: "Saya cenderung memikirkan hal-hal secara rasional",
+                    AE: "Saya bertanggung jawab atas hal-hal"
                 }
             },
             {
-                scenario: "I learn by:",
+                scenario: "Saya belajar dengan:",
                 options: {
-                    CE: "Feeling",
-                    RO: "Watching",
-                    AC: "Thinking",
-                    AE: "Doing"
+                    CE: "Merasakan",
+                    RO: "Mengamati",
+                    AC: "Berpikir",
+                    AE: "Melakukan"
                 }
             },
             {
-                scenario: "When I learn:",
+                scenario: "Ketika saya belajar:",
                 options: {
-                    CE: "I am open to new experiences",
-                    RO: "I look at all sides of issues",
-                    AC: "I like to analyze things",
-                    AE: "I like to try things out"
+                    CE: "Saya terbuka terhadap pengalaman baru",
+                    RO: "Saya melihat semua sisi masalah",
+                    AC: "Saya suka menganalisis hal-hal",
+                    AE: "Saya suka mencoba hal-hal"
                 }
             },
             {
-                scenario: "When I am learning:",
+                scenario: "Ketika saya sedang belajar:",
                 options: {
-                    CE: "I am an intuitive person",
-                    RO: "I am an observing person",
-                    AC: "I am a logical person",
-                    AE: "I am an active person"
+                    CE: "Saya adalah orang yang intuitif",
+                    RO: "Saya adalah orang yang suka mengamati",
+                    AC: "Saya adalah orang yang logis",
+                    AE: "Saya adalah orang yang aktif"
                 }
             },
             {
-                scenario: "I learn best from:",
+                scenario: "Saya belajar dengan baik dari:",
                 options: {
-                    CE: "Personal relationships",
-                    RO: "Observation",
-                    AC: "Rational theories",
-                    AE: "A chance to try out and practice"
+                    CE: "Hubungan personal",
+                    RO: "Observasi",
+                    AC: "Teori-teori rasional",
+                    AE: "Kesempatan untuk mencoba dan berlatih"
                 }
             },
             {
-                scenario: "When I learn:",
+                scenario: "Ketika saya belajar:",
                 options: {
-                    CE: "I like to see results from my work",
-                    RO: "I like ideas and theories",
-                    AC: "I take my time before acting",
-                    AE: "I feel personally involved in things"
+                    CE: "Saya suka melihat hasil dari pekerjaan saya",
+                    RO: "Saya suka ide-ide dan teori",
+                    AC: "Saya meluangkan waktu sebelum bertindak",
+                    AE: "Saya merasa terlibat secara personal dalam hal-hal"
                 }
             },
             {
-                scenario: "I learn best when:",
+                scenario: "Saya belajar dengan baik ketika:",
                 options: {
-                    CE: "I rely on my observations",
-                    RO: "I rely on my feelings",
-                    AC: "I can try things out for myself",
-                    AE: "I rely on my ideas"
+                    CE: "Saya mengandalkan pengamatan saya",
+                    RO: "Saya mengandalkan perasaan saya",
+                    AC: "Saya dapat mencoba sendiri",
+                    AE: "Saya mengandalkan ide-ide saya"
                 }
             },
             {
-                scenario: "When I am learning:",
+                scenario: "Ketika saya sedang belajar:",
                 options: {
-                    CE: "I am a reserved person",
-                    RO: "I am an accepting person",
-                    AC: "I am a rational person",
-                    AE: "I am a responsible person"
+                    CE: "Saya adalah orang yang pendiam",
+                    RO: "Saya adalah orang yang menerima",
+                    AC: "Saya adalah orang yang rasional",
+                    AE: "Saya adalah orang yang bertanggung jawab"
                 }
             },
             {
-                scenario: "When I learn:",
+                scenario: "Ketika saya belajar:",
                 options: {
-                    CE: "I get involved",
-                    RO: "I like to observe",
-                    AC: "I evaluate things",
-                    AE: "I like to be active"
+                    CE: "Saya terlibat",
+                    RO: "Saya suka mengamati",
+                    AC: "Saya mengevaluasi hal-hal",
+                    AE: "Saya suka aktif"
                 }
             },
             {
-                scenario: "I learn best when:",
+                scenario: "Saya belajar dengan baik ketika:",
                 options: {
-                    CE: "I analyze ideas",
-                    RO: "I am receptive and open-minded",
-                    AC: "I am careful",
-                    AE: "I am practical"
+                    CE: "Saya menganalisis ide-ide",
+                    RO: "Saya menerima dan berpikiran terbuka",
+                    AC: "Saya berhati-hati",
+                    AE: "Saya praktis"
                 }
             }
         ];
 
-        let currentQuestion = 0;
+        // Store responses
         let responses = {};
-        let assessmentStarted = false;
-
-        function showTab(tabName) {
-            console.log('Showing tab:', tabName);
-            
-            // Hide all tabs
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            
-            const navTabs = document.querySelectorAll('.nav-tab');
-            navTabs.forEach(tab => tab.classList.remove('active'));
-            
-            // Show selected tab
-            const targetTab = document.getElementById(tabName + '-tab');
-            if (targetTab) {
-                targetTab.classList.add('active');
-                console.log('Tab activated:', tabName);
-            } else {
-                console.error('Tab not found:', tabName + '-tab');
+        let currentQuestion = 0;
+        
+        // Learning style descriptions in Indonesian
+        const styleDescriptions = {
+            'Konverger': {
+                description: 'Konverger bersifat praktis dan lebih suka bekerja dengan tugas dan masalah teknis daripada masalah sosial dan interpersonal. Mereka belajar dengan baik melalui aplikasi praktis dan eksperimentasi.',
+                strengths: 'Pemecahan masalah, pengambilan keputusan, aplikasi praktis, fokus pada solusi',
+                challenges: 'Mungkin tidak sabar dengan teori, mungkin mengabaikan solusi alternatif',
+                tips: 'Cari kesempatan untuk praktik langsung, gunakan simulasi dan studi kasus, terapkan konsep segera'
+            },
+            'Asimilator': {
+                description: 'Asimilator lebih suka bekerja dengan ide dan konsep daripada orang. Mereka unggul dalam menciptakan model teoritis dan menikmati penalaran induktif.',
+                strengths: 'Analisis logis, pemikiran teoritis, mengorganisir informasi, penelitian',
+                challenges: 'Mungkin kurang tertarik pada aplikasi praktis, mungkin mengabaikan aspek manusia',
+                tips: 'Gunakan bacaan dan kuliah, buat model dan teori, berikan waktu untuk refleksi'
+            },
+            'Diverger': {
+                description: 'Diverger imajinatif dan sadar akan makna dan nilai. Mereka melihat situasi konkret dari berbagai perspektif dan unggul dalam menghasilkan ide.',
+                strengths: 'Brainstorming, menghasilkan alternatif, mengenali masalah, memahami orang',
+                challenges: 'Mungkin kesulitan membuat keputusan, mungkin terlumpuh oleh alternatif',
+                tips: 'Gunakan diskusi kelompok, sesi brainstorming, umpan balik personal, dan contoh dunia nyata'
+            },
+            'Akomodator': {
+                description: 'Akomodator belajar terutama dari pengalaman langsung dan menikmati melaksanakan rencana dan tugas yang melibatkan mereka dalam pengalaman baru.',
+                strengths: 'Berorientasi tindakan, kepemimpinan, adaptabilitas, menyelesaikan sesuatu',
+                challenges: 'Mungkin tidak sabar dengan teori, mungkin bertindak tanpa perencanaan yang cukup',
+                tips: 'Gunakan pengalaman langsung, simulasi, kerja lapangan, dan pembelajaran trial-and-error'
             }
-            
-            // Update nav button if event exists
-            if (event && event.target) {
-                event.target.classList.add('active');
-            } else {
-                // Find and activate the correct nav button
-                const navButtons = document.querySelectorAll('.nav-tab');
-                navButtons.forEach(btn => {
-                    if (btn.textContent.toLowerCase().includes(tabName.toLowerCase()) || 
-                        (tabName === 'results' && btn.textContent.includes('Results'))) {
-                        btn.classList.add('active');
-                    }
-                });
+        };
+
+        function loadQuestion() {
+            if (currentQuestion >= questions.length) {
+                showResults();
+                return;
             }
-        }
 
-        function startAssessment() {
-            document.getElementById('assessment-intro').classList.add('hidden');
-            document.getElementById('assessment-questions').classList.remove('hidden');
-            assessmentStarted = true;
-            currentQuestion = 0;
-            responses = {};
-            displayQuestion();
-        }
-
-        function displayQuestion() {
             const question = questions[currentQuestion];
             const container = document.getElementById('question-container');
             
             container.innerHTML = `
-
                 <div class="question-container">
-                    <div class="question-number">Question ${currentQuestion + 1} of ${questions.length}</div>
+                    <div class="question-number">Pertanyaan ${currentQuestion + 1} dari ${questions.length}</div>
                     <div class="question-text">${question.scenario}</div>
-                    <div class="alert alert-warning">
-                        Rank each option from 1 (least like you) to 4 (most like you). Each number must be used exactly once.
-                    </div>
-                    <div class="options-grid">
-                        ${Object.entries(question.options).map(([key, text]) => `
+                    <div class="options-container">
+                        ${Object.entries(question.options).map(([dimension, text]) => `
                             <div class="option-item">
-                                <label>
-                                    <div style="margin-bottom: 10px;">${text}</div>
-                                    <select onchange="updateResponse('${key}', this.value)" style="width: 100%; padding: 5px; border-radius: 5px; border: 1px solid #ccc;">
-                                        <option value="">Select rank</option>
-                                        <option value="1">1 - Least like me</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4 - Most like me</option>
-                                    </select>
-                                </label>
+                                <div class="option-text">${text}</div>
+                                <select class="option-select" onchange="updateResponse('${dimension}', this.value)" data-dimension="${dimension}">
+                                    <option value="">Pilih peringkat</option>
+                                    <option value="1">1 - Paling tidak sesuai</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4 - Paling sesuai</option>
+                                </select>
                             </div>
                         `).join('')}
                     </div>
                 </div>
             `;
-            
+
             // Restore previous responses if any
             if (responses[currentQuestion]) {
-                Object.entries(responses[currentQuestion]).forEach(([key, value]) => {
-                    const select = container.querySelector(`select[onchange*="${key}"]`);
+                Object.entries(responses[currentQuestion]).forEach(([dimension, value]) => {
+                    const select = container.querySelector(`select[data-dimension="${dimension}"]`);
                     if (select) select.value = value;
                 });
             }
-            
+
             updateProgress();
             updateNavigationButtons();
         }
 
         function updateResponse(dimension, value) {
+            console.log('Updating response:', currentQuestion, dimension, value);
+            
             if (!responses[currentQuestion]) {
                 responses[currentQuestion] = {};
             }
-            if (value === "") {
+            
+            if (value === '') {
                 delete responses[currentQuestion][dimension];
             } else {
                 responses[currentQuestion][dimension] = parseInt(value);
             }
-            console.log('Updated response:', currentQuestion, dimension, value);
+            
             console.log('Current responses:', responses);
             updateNavigationButtons();
+            showStatus();
+        }
+
+        function updateNavigationButtons() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            prevBtn.disabled = currentQuestion === 0;
+            
+            const isCurrentValid = isCurrentQuestionValid();
+            
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.textContent = isCurrentValid ? 'Selesaikan Asesmen' : 'Selesaikan Asesmen';
+                nextBtn.disabled = !isCurrentValid;
+            } else {
+                nextBtn.textContent = 'Selanjutnya';
+                nextBtn.disabled = !isCurrentValid;
+            }
         }
 
         function isCurrentQuestionValid() {
@@ -683,43 +639,41 @@
             return JSON.stringify(sortedValues) === JSON.stringify([1, 2, 3, 4]);
         }
 
-        function updateNavigationButtons() {
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
+        function showStatus() {
+            const statusDiv = document.getElementById('status-message');
             
-            prevBtn.disabled = currentQuestion === 0;
+            if (!responses[currentQuestion]) {
+                statusDiv.innerHTML = '';
+                return;
+            }
+
+            const responseCount = Object.keys(responses[currentQuestion]).length;
             
-            if (currentQuestion === questions.length - 1) {
-                nextBtn.textContent = 'Complete Assessment';
-                nextBtn.disabled = !isCurrentQuestionValid();
+            if (responseCount === 0) {
+                statusDiv.innerHTML = '';
+            } else if (responseCount < 4) {
+                statusDiv.innerHTML = `<div class="alert alert-warning">Silakan beri peringkat semua 4 pilihan. Anda sudah memberi peringkat ${responseCount} dari 4.</div>`;
+            } else if (!isCurrentQuestionValid()) {
+                statusDiv.innerHTML = `<div class="alert alert-warning">Silakan gunakan setiap nomor (1,2,3,4) tepat sekali. Periksa peringkat Anda.</div>`;
             } else {
-                nextBtn.textContent = 'Next';
-                nextBtn.disabled = !isCurrentQuestionValid();
+                statusDiv.innerHTML = `<div class="alert alert-success">✓ Semua peringkat lengkap untuk pertanyaan ini!</div>`;
             }
         }
 
         function nextQuestion() {
             if (currentQuestion < questions.length - 1) {
                 currentQuestion++;
-                displayQuestion();
+                loadQuestion();
             } else {
-                completeAssessment();
+                calculateResults();
             }
         }
 
         function previousQuestion() {
             if (currentQuestion > 0) {
                 currentQuestion--;
-                displayQuestion();
+                loadQuestion();
             }
-        }
-
-        function completeAssessment() {
-            document.getElementById('assessment-questions').classList.add('hidden');
-            document.getElementById('assessment-complete').classList.remove('hidden');
-            // Menampilkan tab results
-            document.getElementById('results-tab').style.display = 'block'; // Pastikan tab results muncul
-            showTab('results');  // Pindah ke tab results
         }
 
         function updateProgress() {
@@ -728,197 +682,160 @@
         }
 
         function calculateResults() {
-            console.log('Calculating results...');
-            console.log('All responses:', responses);
+            console.log('Calculating results with all responses:', responses);
             
+            // Check if all questions are answered
+            for (let i = 0; i < questions.length; i++) {
+                if (!responses[i] || Object.keys(responses[i]).length !== 4) {
+                    alert(`Silakan lengkapi pertanyaan ${i + 1} terlebih dahulu.`);
+                    currentQuestion = i;
+                    loadQuestion();
+                    return;
+                }
+            }
+
+            // Calculate total scores
             const scores = { CE: 0, RO: 0, AC: 0, AE: 0 };
             
-            // Sum up all responses
             Object.values(responses).forEach(questionResponses => {
                 Object.entries(questionResponses).forEach(([dimension, score]) => {
                     scores[dimension] += score;
                 });
             });
-            
+
             console.log('Calculated scores:', scores);
-            
-            // Calculate LSI matrix values
+
+            // Calculate matrix values
             const acMinusCE = scores.AC - scores.CE;
             const aeMinusRO = scores.AE - scores.RO;
-            
+
             console.log('Matrix values:', { acMinusCE, aeMinusRO });
-            
+
             // Determine learning style
-            const learningStyle = determineLearningStyle(scores);
+            const learningStyle = determineLearningStyle(acMinusCE, aeMinusRO);
             console.log('Learning style:', learningStyle);
-            
-            // Show results
+
+            // Display results
             displayResults(scores, learningStyle, acMinusCE, aeMinusRO);
-            
-            // Pastikan tab results sudah muncul
-            document.getElementById('results-tab').style.display = 'block'; // Pastikan tab results muncul
-            showTab('results');  // Pindah ke tab results
+
+            // Show results section
+            document.getElementById('assessment-section').classList.add('hidden');
+            document.getElementById('results-section').classList.remove('hidden');
+            document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function determineLearningStyle(scores) {
-            const acCE = scores.AC - scores.CE;
-            const aeRO = scores.AE - scores.RO;
-            
-            if (acCE > 0 && aeRO > 0) {
-                return 'Converger';
-            } else if (acCE > 0 && aeRO < 0) {
-                return 'Assimilator';
-            } else if (acCE < 0 && aeRO < 0) {
+        function determineLearningStyle(acMinusCE, aeMinusRO) {
+            if (acMinusCE > 0 && aeMinusRO > 0) {
+                return 'Konverger';
+            } else if (acMinusCE > 0 && aeMinusRO <= 0) {
+                return 'Asimilator';
+            } else if (acMinusCE <= 0 && aeMinusRO <= 0) {
                 return 'Diverger';
             } else {
-                return 'Accommodator';
+                return 'Akomodator';
             }
         }
 
         function getQuadrant(acMinusCE, aeMinusRO) {
             if (acMinusCE > 0 && aeMinusRO > 0) {
-                return 'Quadrant I (Converger) - Abstract/Active';
-            } else if (acMinusCE > 0 && aeMinusRO < 0) {
-                return 'Quadrant II (Assimilator) - Abstract/Reflective';
-            } else if (acMinusCE < 0 && aeMinusRO < 0) {
-                return 'Quadrant III (Diverger) - Concrete/Reflective';
+                return 'Kuadran I (Konverger) - Abstrak/Aktif';
+            } else if (acMinusCE > 0 && aeMinusRO <= 0) {
+                return 'Kuadran II (Asimilator) - Abstrak/Reflektif';
+            } else if (acMinusCE <= 0 && aeMinusRO <= 0) {
+                return 'Kuadran III (Diverger) - Konkret/Reflektif';
             } else {
-                return 'Quadrant IV (Accommodator) - Concrete/Active';
+                return 'Kuadran IV (Akomodator) - Konkret/Aktif';
             }
         }
 
         function displayResults(scores, learningStyle, acMinusCE, aeMinusRO) {
             console.log('Displaying results:', { scores, learningStyle, acMinusCE, aeMinusRO });
-            
-            const styleDescriptions = {
-                'Converger': {
-                    description: 'Convergers are practical and prefer to work with technical tasks and problems rather than social and interpersonal issues. They learn best through practical application and experimentation.',
-                    strengths: 'Problem-solving, decision-making, practical application, focus on solutions',
-                    challenges: 'May be impatient with theory, may overlook alternative solutions',
-                    tips: 'Seek opportunities for hands-on practice, use simulations and case studies, apply concepts immediately'
-                },
-                'Assimilator': {
-                    description: 'Assimilators prefer to work with ideas and concepts rather than people. They excel at creating theoretical models and enjoy inductive reasoning.',
-                    strengths: 'Logical analysis, theoretical thinking, organizing information, research',
-                    challenges: 'May be less interested in practical application, may overlook people aspects',
-                    tips: 'Use reading and lectures, create models and theories, allow time for reflection'
-                },
-                'Diverger': {
-                    description: 'Divergers are imaginative and aware of meaning and values. They view concrete situations from many perspectives and excel at generating ideas.',
-                    strengths: 'Brainstorming, generating alternatives, recognizing problems, understanding people',
-                    challenges: 'May have difficulty making decisions, may be paralyzed by alternatives',
-                    tips: 'Use group discussions, brainstorming sessions, personalized feedback, and real-world examples'
-                },
-                'Accommodator': {
-                    description: 'Accommodators learn primarily from hands-on experience and enjoy carrying out plans and tasks that involve them in new experiences.',
-                    strengths: 'Action-oriented, leadership, adaptability, getting things done',
-                    challenges: 'May be impatient with theory, may act without sufficient planning',
-                    tips: 'Use hands-on experiences, simulations, field work, and trial-and-error learning'
-                }
-            };
 
-            const resultsContent = document.getElementById('results-content');
-            
-            if (!resultsContent) {
-                console.error('Results content element not found!');
-                return;
-            }
-            
-            const responseCount = Object.keys(responses).length;
-            console.log('Number of responses:', responseCount);
-            
-            resultsContent.innerHTML = `
-                <div class="results-container">
-                    <h2>Your Learning Style Results</h2>
-                    <p><strong>Assessment completed with ${responseCount} questions</strong></p>
-                    
-                    <div class="learning-style-result">
-                        Your Primary Learning Style: ${learningStyle}
-                    </div>
-                    
-                    <div class="scores-grid">
-                        <div class="score-item">
-                            <div class="score-label">Concrete Experience (CE)</div>
-                            <div class="score-value">${scores.CE}</div>
-                        </div>
-                        <div class="score-item">
-                            <div class="score-label">Reflective Observation (RO)</div>
-                            <div class="score-value">${scores.RO}</div>
-                        </div>
-                        <div class="score-item">
-                            <div class="score-label">Abstract Conceptualization (AC)</div>
-                            <div class="score-value">${scores.AC}</div>
-                        </div>
-                        <div class="score-item">
-                            <div class="score-label">Active Experimentation (AE)</div>
-                            <div class="score-value">${scores.AE}</div>
-                        </div>
-                    </div>
+            // Update learning style display
+            document.getElementById('learning-style-display').textContent = `Gaya Belajar Anda: ${learningStyle}`;
 
-                    <div class="style-description">
-                        <h3>LSI Matrix Analysis</h3>
-                        <div class="scores-grid">
-                            <div class="score-item" style="background: #e6f3ff; border: 2px solid #4299e1;">
-                                <div class="score-label">AC - CE (Abstract vs Concrete)</div>
-                                <div class="score-value">${acMinusCE}</div>
-                                <small style="color: #666;">Positive: Abstract thinking preference<br>Negative: Concrete experience preference</small>
-                            </div>
-                            <div class="score-item" style="background: #f0fff4; border: 2px solid #48bb78;">
-                                <div class="score-label">AE - RO (Active vs Reflective)</div>
-                                <div class="score-value">${aeMinusRO}</div>
-                                <small style="color: #666;">Positive: Active experimentation preference<br>Negative: Reflective observation preference</small>
-                            </div>
-                        </div>
-                        
-                        <div style="margin: 20px 0; padding: 20px; background: #f8fafc; border-radius: 15px; border-left: 5px solid #667eea;">
-                            <h4>LSI Matrix Interpretation</h4>
-                            <p><strong>Your position:</strong> (${acMinusCE}, ${aeMinusRO})</p>
-                            <p><strong>Quadrant:</strong> ${getQuadrant(acMinusCE, aeMinusRO)}</p>
-                            <p><strong>Distance from center:</strong> ${Math.sqrt(acMinusCE * acMinusCE + aeMinusRO * aeMinusRO).toFixed(2)}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="style-description">
-                        <h3>About Your Learning Style</h3>
-                        <p>${styleDescriptions[learningStyle].description}</p>
-                        
-                        <h4>Your Strengths:</h4>
-                        <p>${styleDescriptions[learningStyle].strengths}</p>
-                        
-                        <h4>Potential Challenges:</h4>
-                        <p>${styleDescriptions[learningStyle].challenges}</p>
-                        
-                        <h4>Learning Tips:</h4>
-                        <p>${styleDescriptions[learningStyle].tips}</p>
-                    </div>
+            // Update individual scores
+            document.getElementById('ce-score').textContent = scores.CE;
+            document.getElementById('ro-score').textContent = scores.RO;
+            document.getElementById('ac-score').textContent = scores.AC;
+            document.getElementById('ae-score').textContent = scores.AE;
 
-                    <div style="text-align: center; margin-top: 30px;">
-                        <button class="btn btn-primary" onclick="restartAssessment()">Take Assessment Again</button>
-                        <button class="btn btn-secondary" onclick="printResults()">Save Results</button>
-                    </div>
-                </div>
+            // Update matrix analysis
+            document.getElementById('ac-ce-score').textContent = acMinusCE;
+            document.getElementById('ae-ro-score').textContent = aeMinusRO;
+            document.getElementById('matrix-position').textContent = `(${acMinusCE}, ${aeMinusRO})`;
+            document.getElementById('quadrant-info').textContent = getQuadrant(acMinusCE, aeMinusRO);
+            
+            const distance = Math.sqrt(acMinusCE * acMinusCE + aeMinusRO * aeMinusRO).toFixed(2);
+            document.getElementById('distance-info').textContent = distance;
+
+            // Update style description
+            const style = styleDescriptions[learningStyle];
+            document.getElementById('style-description').innerHTML = `
+                <h3>Tentang Gaya Belajar Anda: ${learningStyle}</h3>
+                <p><strong>Deskripsi:</strong> ${style.description}</p>
+                <h4>Kekuatan Anda:</h4>
+                <p>${style.strengths}</p>
+                <h4>Tantangan Potensial:</h4>
+                <p>${style.challenges}</p>
+                <h4>Tips Belajar:</h4>
+                <p>${style.tips}</p>
             `;
+
+            // Update breakdown table
+            const tbody = document.getElementById('breakdown-tbody');
+            tbody.innerHTML = '';
+            
+            // Add each question's responses
+            Object.entries(responses).forEach(([qIndex, qResponses]) => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>Pertanyaan ${parseInt(qIndex) + 1}</td>
+                    <td>${qResponses.CE || 0}</td>
+                    <td>${qResponses.RO || 0}</td>
+                    <td>${qResponses.AC || 0}</td>
+                    <td>${qResponses.AE || 0}</td>
+                `;
+            });
+
+            // Add total row
+            const totalRow = tbody.insertRow();
+            totalRow.className = 'total-row';
+            totalRow.innerHTML = `
+                <td><strong>TOTAL</strong></td>
+                <td><strong>${scores.CE}</strong></td>
+                <td><strong>${scores.RO}</strong></td>
+                <td><strong>${scores.AC}</strong></td>
+                <td><strong>${scores.AE}</strong></td>
+            `;
+
+            console.log('Results display completed successfully');
         }
 
-        function restartAssessment() {
-            currentQuestion = 0;
+        function resetAssessment() {
+            // Clear responses
             responses = {};
-            assessmentStarted = false;
-            document.getElementById('assessment-intro').classList.remove('hidden');
-            document.getElementById('assessment-questions').classList.add('hidden');
-            document.getElementById('assessment-complete').classList.add('hidden');
-            document.getElementById('results-tab').style.display = 'none';
-            showTab('assessment');
+            currentQuestion = 0;
+            
+            // Show assessment section
+            document.getElementById('assessment-section').classList.remove('hidden');
+            document.getElementById('results-section').classList.add('hidden');
+            
+            // Load first question
+            loadQuestion();
+            
+            // Scroll to top
+            document.getElementById('assessment-section').scrollIntoView({ behavior: 'smooth' });
         }
 
         function printResults() {
             window.print();
         }
 
-        // Initialize the app
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            // Set up initial state
-            showTab('assessment');
+            console.log('Kolb LSI Indonesian Version initialized');
+            loadQuestion();
         });
     </script>
 </body>
