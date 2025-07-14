@@ -573,6 +573,8 @@
         let assessmentStarted = false;
 
         function showTab(tabName) {
+            console.log('Showing tab:', tabName);
+            
             // Hide all tabs
             const tabs = document.querySelectorAll('.tab-content');
             tabs.forEach(tab => tab.classList.remove('active'));
@@ -581,8 +583,27 @@
             navTabs.forEach(tab => tab.classList.remove('active'));
             
             // Show selected tab
-            document.getElementById(tabName + '-tab').classList.add('active');
-            event.target.classList.add('active');
+            const targetTab = document.getElementById(tabName + '-tab');
+            if (targetTab) {
+                targetTab.classList.add('active');
+                console.log('Tab activated:', tabName);
+            } else {
+                console.error('Tab not found:', tabName + '-tab');
+            }
+            
+            // Update nav button if event exists
+            if (event && event.target) {
+                event.target.classList.add('active');
+            } else {
+                // Find and activate the correct nav button
+                const navButtons = document.querySelectorAll('.nav-tab');
+                navButtons.forEach(btn => {
+                    if (btn.textContent.toLowerCase().includes(tabName.toLowerCase()) || 
+                        (tabName === 'results' && btn.textContent.includes('Results'))) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
         }
 
         function startAssessment() {
@@ -599,6 +620,7 @@
             const container = document.getElementById('question-container');
             
             container.innerHTML = `
+
                 <div class="question-container">
                     <div class="question-number">Question ${currentQuestion + 1} of ${questions.length}</div>
                     <div class="question-text">${question.scenario}</div>
@@ -640,7 +662,13 @@
             if (!responses[currentQuestion]) {
                 responses[currentQuestion] = {};
             }
-            responses[currentQuestion][dimension] = parseInt(value);
+            if (value === "") {
+                delete responses[currentQuestion][dimension];
+            } else {
+                responses[currentQuestion][dimension] = parseInt(value);
+            }
+            console.log('Updated response:', currentQuestion, dimension, value);
+            console.log('Current responses:', responses);
             updateNavigationButtons();
         }
 
@@ -689,6 +717,9 @@
         function completeAssessment() {
             document.getElementById('assessment-questions').classList.add('hidden');
             document.getElementById('assessment-complete').classList.remove('hidden');
+            // Menampilkan tab results
+            document.getElementById('results-tab').style.display = 'block'; // Pastikan tab results muncul
+            showTab('results');  // Pindah ke tab results
         }
 
         function updateProgress() {
@@ -697,6 +728,9 @@
         }
 
         function calculateResults() {
+            console.log('Calculating results...');
+            console.log('All responses:', responses);
+            
             const scores = { CE: 0, RO: 0, AC: 0, AE: 0 };
             
             // Sum up all responses
@@ -706,19 +740,27 @@
                 });
             });
             
+            console.log('Calculated scores:', scores);
+            
+            // Calculate LSI matrix values
+            const acMinusCE = scores.AC - scores.CE;
+            const aeMinusRO = scores.AE - scores.RO;
+            
+            console.log('Matrix values:', { acMinusCE, aeMinusRO });
+            
             // Determine learning style
             const learningStyle = determineLearningStyle(scores);
+            console.log('Learning style:', learningStyle);
             
             // Show results
-            displayResults(scores, learningStyle);
+            displayResults(scores, learningStyle, acMinusCE, aeMinusRO);
             
-            // Show results tab
-            document.getElementById('results-tab').style.display = 'block';
-            showTab('results');
+            // Pastikan tab results sudah muncul
+            document.getElementById('results-tab').style.display = 'block'; // Pastikan tab results muncul
+            showTab('results');  // Pindah ke tab results
         }
 
         function determineLearningStyle(scores) {
-            // Calculate AC-CE and AE-RO
             const acCE = scores.AC - scores.CE;
             const aeRO = scores.AE - scores.RO;
             
@@ -733,7 +775,21 @@
             }
         }
 
-        function displayResults(scores, learningStyle) {
+        function getQuadrant(acMinusCE, aeMinusRO) {
+            if (acMinusCE > 0 && aeMinusRO > 0) {
+                return 'Quadrant I (Converger) - Abstract/Active';
+            } else if (acMinusCE > 0 && aeMinusRO < 0) {
+                return 'Quadrant II (Assimilator) - Abstract/Reflective';
+            } else if (acMinusCE < 0 && aeMinusRO < 0) {
+                return 'Quadrant III (Diverger) - Concrete/Reflective';
+            } else {
+                return 'Quadrant IV (Accommodator) - Concrete/Active';
+            }
+        }
+
+        function displayResults(scores, learningStyle, acMinusCE, aeMinusRO) {
+            console.log('Displaying results:', { scores, learningStyle, acMinusCE, aeMinusRO });
+            
             const styleDescriptions = {
                 'Converger': {
                     description: 'Convergers are practical and prefer to work with technical tasks and problems rather than social and interpersonal issues. They learn best through practical application and experimentation.',
@@ -762,9 +818,19 @@
             };
 
             const resultsContent = document.getElementById('results-content');
+            
+            if (!resultsContent) {
+                console.error('Results content element not found!');
+                return;
+            }
+            
+            const responseCount = Object.keys(responses).length;
+            console.log('Number of responses:', responseCount);
+            
             resultsContent.innerHTML = `
                 <div class="results-container">
                     <h2>Your Learning Style Results</h2>
+                    <p><strong>Assessment completed with ${responseCount} questions</strong></p>
                     
                     <div class="learning-style-result">
                         Your Primary Learning Style: ${learningStyle}
@@ -788,6 +854,29 @@
                             <div class="score-value">${scores.AE}</div>
                         </div>
                     </div>
+
+                    <div class="style-description">
+                        <h3>LSI Matrix Analysis</h3>
+                        <div class="scores-grid">
+                            <div class="score-item" style="background: #e6f3ff; border: 2px solid #4299e1;">
+                                <div class="score-label">AC - CE (Abstract vs Concrete)</div>
+                                <div class="score-value">${acMinusCE}</div>
+                                <small style="color: #666;">Positive: Abstract thinking preference<br>Negative: Concrete experience preference</small>
+                            </div>
+                            <div class="score-item" style="background: #f0fff4; border: 2px solid #48bb78;">
+                                <div class="score-label">AE - RO (Active vs Reflective)</div>
+                                <div class="score-value">${aeMinusRO}</div>
+                                <small style="color: #666;">Positive: Active experimentation preference<br>Negative: Reflective observation preference</small>
+                            </div>
+                        </div>
+                        
+                        <div style="margin: 20px 0; padding: 20px; background: #f8fafc; border-radius: 15px; border-left: 5px solid #667eea;">
+                            <h4>LSI Matrix Interpretation</h4>
+                            <p><strong>Your position:</strong> (${acMinusCE}, ${aeMinusRO})</p>
+                            <p><strong>Quadrant:</strong> ${getQuadrant(acMinusCE, aeMinusRO)}</p>
+                            <p><strong>Distance from center:</strong> ${Math.sqrt(acMinusCE * acMinusCE + aeMinusRO * aeMinusRO).toFixed(2)}</p>
+                        </div>
+                    </div>
                     
                     <div class="style-description">
                         <h3>About Your Learning Style</h3>
@@ -802,7 +891,7 @@
                         <h4>Learning Tips:</h4>
                         <p>${styleDescriptions[learningStyle].tips}</p>
                     </div>
-                    
+
                     <div style="text-align: center; margin-top: 30px;">
                         <button class="btn btn-primary" onclick="restartAssessment()">Take Assessment Again</button>
                         <button class="btn btn-secondary" onclick="printResults()">Save Results</button>
