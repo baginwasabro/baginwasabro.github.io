@@ -521,56 +521,32 @@
     </div>
 
     <script>
-        // Enhanced Real-time Blockchain System
+        // Simple & Fast Blockchain System
         class TransactionBlock {
             constructor(index, timestamp, transactionData, previousHash) {
                 this.index = index;
                 this.timestamp = timestamp;
                 this.transactionData = transactionData;
                 this.previousHash = previousHash || "0";
-                this.nonce = 0;
-                this.hash = this.calculateHash();
+                this.hash = this.calculateSimpleHash();
             }
 
-            calculateHash() {
-                return this.sha256(
-                    this.index +
-                    this.previousHash +
-                    this.timestamp +
-                    JSON.stringify(this.transactionData) +
-                    this.nonce
-                ).toString();
-            }
-
-            sha256(data) {
-                // Enhanced SHA-256 simulation
+            calculateSimpleHash() {
+                // Super simple and fast hash function
+                const data = this.index + this.previousHash + this.timestamp + JSON.stringify(this.transactionData);
                 let hash = 0;
-                let char;
+                
                 for (let i = 0; i < data.length; i++) {
-                    char = data.charCodeAt(i);
-                    hash = ((hash << 5) - hash) + char;
-                    hash = hash & hash;
+                    hash = ((hash << 3) + hash + data.charCodeAt(i)) & 0x7fffffff;
                 }
                 
-                // Convert to positive hex with padding
-                const result = (Math.abs(hash) + Date.now()).toString(16).padStart(12, '0');
-                return result.substring(0, 12);
-            }
-
-            mineBlock(difficulty = 2) {
-                const target = Array(difficulty + 1).join("0");
-                while (this.hash.substring(0, difficulty) !== target) {
-                    this.nonce++;
-                    this.hash = this.calculateHash();
-                }
-                return this.nonce;
+                return hash.toString(16).padStart(8, '0');
             }
         }
 
         class RealTimeBlockchain {
             constructor() {
                 this.chain = [];
-                this.difficulty = 2;
                 this.financialData = {
                     totalIncome: 0,
                     totalProfit: 0,
@@ -600,17 +576,15 @@
                     timestamp: timestamp
                 };
 
+                // Create new block instantly (no mining)
                 const newBlock = new TransactionBlock(
                     this.chain.length,
                     timestamp,
                     enhancedTransaction,
                     previousHash
                 );
-
-                // Mine the block
-                const miningAttempts = newBlock.mineBlock(this.difficulty);
                 
-                // Add to chain
+                // Add to chain immediately
                 this.chain.push(newBlock);
                 
                 // Update financial data
@@ -623,7 +597,7 @@
                     success: true,
                     block: newBlock,
                     transactionId: enhancedTransaction.transactionId,
-                    miningAttempts: miningAttempts
+                    processingTime: 'INSTANT'
                 };
             }
 
@@ -661,14 +635,17 @@
             }
 
             validateChain() {
+                // Simple and fast chain validation
                 for (let i = 1; i < this.chain.length; i++) {
                     const currentBlock = this.chain[i];
                     const previousBlock = this.chain[i - 1];
 
-                    if (currentBlock.hash !== currentBlock.calculateHash()) {
+                    // Check if current block hash is valid
+                    if (currentBlock.hash !== currentBlock.calculateSimpleHash()) {
                         return { valid: false, error: `Block ${i} has invalid hash` };
                     }
 
+                    // Check if previous hash matches
                     if (currentBlock.previousHash !== previousBlock.hash) {
                         return { valid: false, error: `Block ${i} has invalid previous hash` };
                     }
@@ -833,19 +810,16 @@
             
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             
-            // Show payment processing
+            // Show quick processing
             const resultDiv = document.getElementById('paymentResult');
             resultDiv.innerHTML = `
                 <div class="payment-processing">
                     <h3>⚡ Memproses Pembayaran...</h3>
                     <p>Sedang mencatat transaksi ke blockchain...</p>
-                    <div style="margin: 20px 0;">
-                        <div style="display: inline-block; width: 30px; height: 30px; border: 3px solid #f3f3f3; border-top: 3px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-                    </div>
                 </div>
             `;
             
-            // Process payment after delay (simulate real payment)
+            // Process payment immediately (no delay)
             setTimeout(() => {
                 const transactionData = {
                     buyerInfo: {
@@ -861,7 +835,7 @@
                     processingTime: new Date().toISOString()
                 };
                 
-                // Add to blockchain
+                // Add to blockchain instantly
                 const result = blockchain.addTransactionBlock(transactionData);
                 
                 if (result.success) {
@@ -881,8 +855,8 @@
                             <p><strong>Transaction ID:</strong> ${result.transactionId}</p>
                             <p><strong>Total:</strong> Rp ${total.toLocaleString('id-ID')}</p>
                             <p><strong>Block Hash:</strong> ${result.block.hash}</p>
-                            <p><strong>Mining Attempts:</strong> ${result.miningAttempts}</p>
-                            <p>✅ <strong>Transaksi telah tercatat permanen di blockchain!</strong></p>
+                            <p><strong>Processing:</strong> ${result.processingTime}</p>
+                            <p>✅ <strong>Transaksi telah tercatat INSTANT di blockchain!</strong></p>
                         </div>
                     `;
                     
@@ -896,9 +870,9 @@
                     updateCart();
                     updateFinancialReport();
                     
-                    showNotification(`Pembayaran berhasil! Transaksi tercatat di Block #${result.block.index}`, 'success');
+                    showNotification(`💎 Pembayaran berhasil! Block #${result.block.index} tercatat INSTANT!`, 'success');
                 }
-            }, 2000);
+            }, 300); // Very quick processing - just 300ms
         }
 
         function updateFinancialReport() {
@@ -952,7 +926,7 @@
                     <div style="margin-bottom: 15px;">
                         <strong>🔗 Hash:</strong> <code>${block.hash}</code><br>
                         <strong>🔗 Previous Hash:</strong> <code>${block.previousHash}</code><br>
-                        <strong>⚡ Nonce:</strong> ${block.nonce}
+                        <strong>⚡ Processing:</strong> INSTANT
                     </div>
                     <div class="transaction-detail">
                         <strong>💳 Transaction ID:</strong> ${block.transactionData.transactionId}<br>
@@ -971,7 +945,7 @@
         function validateBlockchain() {
             const result = blockchain.validateChain();
             if (result.valid) {
-                showNotification('✅ Blockchain integrity validated successfully!', 'success');
+                showNotification('✅ Blockchain integrity validated successfully! Chain is secure.', 'success');
             } else {
                 showNotification(`❌ Blockchain validation failed: ${result.error}`, 'error');
             }
