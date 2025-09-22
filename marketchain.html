@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MarketChain UMKM - Marketplace Blockchain</title>
+    <title>MarketChain UMKM - Real-Time Blockchain Payment</title>
     <style>
         * {
             margin: 0;
@@ -44,12 +44,14 @@
             font-size: 1.1em;
         }
 
-        .user-info {
-            background: #e3f2fd;
+        .blockchain-status {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
             padding: 15px;
             border-radius: 10px;
             margin-top: 15px;
-            border-left: 4px solid #2196f3;
+            text-align: center;
+            font-weight: bold;
         }
 
         .tabs {
@@ -70,7 +72,6 @@
             font-size: 16px;
             font-weight: 600;
             transition: all 0.3s ease;
-            position: relative;
         }
 
         .tab.active {
@@ -96,27 +97,7 @@
             display: none;
         }
 
-        /* Marketplace Styles */
-        .search-filter {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-
-        .search-filter input, .search-filter select {
-            padding: 12px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-
-        .search-filter input:focus, .search-filter select:focus {
-            outline: none;
-            border-color: #007bff;
-        }
-
+        /* Product Grid */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -131,8 +112,6 @@
             text-align: center;
             transition: all 0.3s ease;
             background: #fff;
-            position: relative;
-            overflow: hidden;
         }
 
         .product-card:hover {
@@ -151,41 +130,6 @@
             align-items: center;
             justify-content: center;
             font-size: 48px;
-            position: relative;
-        }
-
-        .product-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #28a745;
-            color: white;
-            padding: 4px 8px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .product-title {
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: #333;
-        }
-
-        .product-price {
-            font-size: 1.4em;
-            font-weight: bold;
-            color: #007bff;
-            margin-bottom: 10px;
-        }
-
-        .product-description {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 15px;
-            height: 40px;
-            overflow: hidden;
         }
 
         .btn {
@@ -210,16 +154,8 @@
             background: #28a745;
         }
 
-        .btn-success:hover {
-            background: #1e7e34;
-        }
-
         .btn-danger {
             background: #dc3545;
-        }
-
-        .btn-danger:hover {
-            background: #c82333;
         }
 
         .btn-warning {
@@ -227,109 +163,15 @@
             color: #212529;
         }
 
-        .btn-warning:hover {
-            background: #e0a800;
-        }
-
-        /* Cart Styles */
-        .cart-section {
-            background: #f8f9fa;
+        /* Payment Processing */
+        .payment-processing {
+            background: linear-gradient(135deg, #ffd700, #ffed4a);
+            border: 2px solid #f1c40f;
             border-radius: 15px;
             padding: 25px;
-            margin-top: 30px;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            border-bottom: 2px solid #e9ecef;
-            background: white;
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
-
-        .cart-item:last-child {
-            border-bottom: none;
-        }
-
-        .cart-controls {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .quantity-control {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #e9ecef;
-            border-radius: 20px;
-            padding: 5px 10px;
-        }
-
-        .quantity-btn {
-            background: #007bff;
-            color: white;
-            border: none;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        /* Checkout Form */
-        .checkout-form {
-            background: #fff3cd;
-            border: 2px solid #ffeaa7;
-            border-radius: 15px;
-            padding: 25px;
-            margin-top: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
-            outline: none;
-            border-color: #007bff;
-        }
-
-        /* Blockchain Styles */
-        .mining-status {
-            background: #fff3cd;
-            border: 2px solid #ffeaa7;
-            padding: 20px;
-            border-radius: 15px;
             margin: 20px 0;
             text-align: center;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .mining-status.mining {
-            background: #d4edda;
-            border-color: #c3e6cb;
-            animation: pulse 1.5s infinite;
+            animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
@@ -338,9 +180,19 @@
             100% { transform: scale(1); }
         }
 
+        .payment-success {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* Blockchain Block */
         .block {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border: 2px solid #dee2e6;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
             border-radius: 15px;
             padding: 25px;
             margin-bottom: 20px;
@@ -349,7 +201,7 @@
 
         .block:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
 
         .block-header {
@@ -358,35 +210,27 @@
             align-items: center;
             margin-bottom: 15px;
             padding-bottom: 10px;
-            border-bottom: 2px solid #dee2e6;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
         }
 
-        .block-index {
-            background: #007bff;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-        }
-
-        .transaction {
-            background: #e3f2fd;
+        .transaction-detail {
+            background: rgba(255,255,255,0.1);
             padding: 15px;
             margin: 10px 0;
             border-radius: 10px;
-            border-left: 4px solid #2196f3;
+            border-left: 4px solid #ffd700;
         }
 
-        /* Analytics Styles */
-        .stats {
+        /* Financial Report Styles */
+        .financial-summary {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
 
-        .stat-card {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+        .finance-card {
+            background: linear-gradient(135deg, #2196f3, #21cbf3);
             color: white;
             padding: 25px;
             border-radius: 15px;
@@ -394,22 +238,32 @@
             transition: transform 0.3s ease;
         }
 
-        .stat-card:hover {
+        .finance-card:hover {
             transform: translateY(-5px);
         }
 
-        .stat-value {
-            font-size: 2.5em;
+        .finance-value {
+            font-size: 2.2em;
             font-weight: bold;
             margin-bottom: 5px;
         }
 
-        .stat-label {
-            font-size: 1.1em;
-            opacity: 0.9;
+        /* Real-time updates */
+        .live-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: blink 1s infinite;
+            margin-right: 8px;
         }
 
-        /* Notifications */
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
         .notification {
             position: fixed;
             top: 20px;
@@ -422,610 +276,461 @@
             animation: slideIn 0.3s ease;
         }
 
-        .notification.success {
-            background: #28a745;
-        }
-
-        .notification.error {
-            background: #dc3545;
-        }
-
-        .notification.info {
-            background: #17a2b8;
-        }
+        .notification.success { background: #28a745; }
+        .notification.error { background: #dc3545; }
+        .notification.info { background: #17a2b8; }
 
         @keyframes slideIn {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .tabs {
-                flex-direction: column;
-            }
-            
-            .product-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .search-filter {
-                flex-direction: column;
-            }
-            
-            .cart-item {
-                flex-direction: column;
-                gap: 10px;
-                text-align: center;
-            }
-            
-            .stats {
-                grid-template-columns: 1fr;
-            }
+        /* Implementation Flow */
+        .implementation-flow {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
         }
 
-        /* Loading Animation */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #007bff;
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid #007bff;
+        }
+
+        .flow-number {
+            background: #007bff;
+            color: white;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            .tabs { flex-direction: column; }
+            .product-grid { grid-template-columns: 1fr; }
+            .financial-summary { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>🏪 MarketChain UMKM</h1>
-            <p>Marketplace UMKM Berbasis Blockchain - Aman, Transparan, dan Terpercaya</p>
-            <div class="user-info">
-                <strong>👤 User ID:</strong> <span id="userId">USER-12345</span> | 
-                <strong>💰 Saldo:</strong> <span id="userBalance">Rp 5.000.000</span> |
-                <strong>📱 Status:</strong> <span style="color: #28a745;">Online</span>
+            <h1>💎 MarketChain UMKM</h1>
+            <p>Real-Time Blockchain Payment System - Setiap Transaksi Langsung Tercatat</p>
+            <div class="blockchain-status">
+                <span class="live-indicator"></span>
+                <strong>Blockchain Status:</strong> <span id="blockchainStatus">LIVE & READY</span> | 
+                <strong>Total Blocks:</strong> <span id="totalBlocks">0</span> |
+                <strong>Last Block:</strong> <span id="lastBlockTime">-</span>
             </div>
         </div>
 
         <div class="tabs">
-            <button class="tab active" onclick="showTab('marketplace', this)">🛒 Belanja</button>
-            <button class="tab" onclick="showTab('seller', this)">🏪 Jual Produk</button>
-            <button class="tab" onclick="showTab('blockchain', this)">⛓️ Riwayat Blockchain</button>
-            <button class="tab" onclick="showTab('analytics', this)">📊 Statistik</button>
-            <button class="tab" onclick="showTab('help', this)">❓ Panduan</button>
+            <button class="tab active" onclick="showTab('marketplace', this)">🛒 Marketplace</button>
+            <button class="tab" onclick="showTab('financial', this)">💰 Laporan Keuangan</button>
+            <button class="tab" onclick="showTab('blockchain', this)">⛓️ Blockchain Records</button>
+            <button class="tab" onclick="showTab('implementation', this)">🔧 Cara Kerja</button>
         </div>
 
         <!-- Marketplace Tab -->
         <div id="marketplace" class="content">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2>🛍️ Produk UMKM Terbaru</h2>
-                <div style="display: flex; gap: 10px;">
-                    <span id="cartCount" style="background: #dc3545; color: white; padding: 5px 10px; border-radius: 15px; font-weight: bold;">0 item</span>
-                </div>
-            </div>
-            
-            <div class="search-filter">
-                <input type="text" id="searchProduct" placeholder="🔍 Cari produk..." onkeyup="filterProducts()">
-                <select id="categoryFilter" onchange="filterProducts()">
-                    <option value="">📂 Semua Kategori</option>
-                    <option value="Fashion">👗 Fashion</option>
-                    <option value="Makanan">🍜 Makanan</option>
-                    <option value="Minuman">🥤 Minuman</option>
-                    <option value="Kerajinan">🎨 Kerajinan</option>
-                    <option value="Elektronik">📱 Elektronik</option>
-                </select>
-                <select id="priceFilter" onchange="filterProducts()">
-                    <option value="">💰 Semua Harga</option>
-                    <option value="0-50000">< Rp 50.000</option>
-                    <option value="50000-100000">Rp 50.000 - 100.000</option>
-                    <option value="100000-500000">Rp 100.000 - 500.000</option>
-                    <option value="500000+">> Rp 500.000</option>
-                </select>
-            </div>
+            <h2>🛍️ Marketplace UMKM - Pembayaran Real-Time Blockchain</h2>
             
             <div class="product-grid" id="productGrid"></div>
             
-            <div class="cart-section">
-                <h3>🛒 Keranjang Belanja Anda</h3>
-                <div id="cart"></div>
-                <div id="checkoutSection" class="hidden">
-                    <div class="checkout-form">
-                        <h4>📋 Informasi Pengiriman</h4>
-                        <div class="form-group">
-                            <label>Nama Lengkap:</label>
-                            <input type="text" id="customerName" placeholder="Masukkan nama lengkap">
-                        </div>
-                        <div class="form-group">
-                            <label>Alamat Lengkap:</label>
-                            <textarea id="customerAddress" placeholder="Masukkan alamat lengkap" rows="3"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Nomor Telepon:</label>
-                            <input type="tel" id="customerPhone" placeholder="Contoh: 08123456789">
-                        </div>
-                        <div class="form-group">
-                            <label>Metode Pembayaran:</label>
-                            <select id="paymentMethod">
-                                <option value="transfer">🏦 Transfer Bank</option>
-                                <option value="ewallet">📱 E-Wallet</option>
-                                <option value="cod">💵 Bayar di Tempat (COD)</option>
-                                <option value="crypto">₿ Cryptocurrency</option>
-                            </select>
-                        </div>
-                        <div style="text-align: center; margin-top: 20px;">
-                            <button class="btn btn-success" onclick="processCheckout()">
-                                💳 Proses Pembayaran & Catat ke Blockchain
-                            </button>
-                        </div>
+            <div id="cart" style="margin-top: 30px;"></div>
+            
+            <div id="paymentSection" class="hidden">
+                <h3>💳 Proses Pembayaran Instant</h3>
+                <div style="background: #e3f2fd; padding: 20px; border-radius: 15px; margin: 20px 0;">
+                    <h4>📋 Data Pembeli</h4>
+                    <input type="text" id="buyerName" placeholder="Nama Lengkap" style="width: 100%; margin: 5px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="email" id="buyerEmail" placeholder="Email" style="width: 100%; margin: 5px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <input type="tel" id="buyerPhone" placeholder="Nomor HP" style="width: 100%; margin: 5px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <textarea id="buyerAddress" placeholder="Alamat Lengkap" style="width: 100%; margin: 5px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px;" rows="3"></textarea>
+                    <select id="paymentMethod" style="width: 100%; margin: 5px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                        <option value="bank_transfer">🏦 Transfer Bank</option>
+                        <option value="ewallet">📱 E-Wallet (GoPay/OVO/DANA)</option>
+                        <option value="crypto">₿ Cryptocurrency</option>
+                        <option value="cod">💵 Cash on Delivery</option>
+                    </select>
+                </div>
+                
+                <button class="btn btn-success" onclick="processInstantPayment()" style="width: 100%; padding: 15px; font-size: 18px;">
+                    ⚡ BAYAR SEKARANG & CATAT KE BLOCKCHAIN
+                </button>
+            </div>
+            
+            <div id="paymentResult"></div>
+        </div>
+
+        <!-- Financial Report Tab -->
+        <div id="financial" class="content hidden">
+            <h2>💰 Laporan Keuangan Real-Time</h2>
+            <p style="color: #666; margin-bottom: 25px;">Data keuangan yang terintegrasi langsung dengan blockchain</p>
+            
+            <div class="financial-summary">
+                <div class="finance-card">
+                    <div class="finance-value" id="totalIncome">Rp 0</div>
+                    <div>Total Pendapatan</div>
+                </div>
+                <div class="finance-card" style="background: linear-gradient(135deg, #28a745, #20c997);">
+                    <div class="finance-value" id="totalProfit">Rp 0</div>
+                    <div>Total Keuntungan</div>
+                </div>
+                <div class="finance-card" style="background: linear-gradient(135deg, #ffc107, #ffed4a);">
+                    <div class="finance-value" id="totalTax">Rp 0</div>
+                    <div>Total Pajak (11%)</div>
+                </div>
+                <div class="finance-card" style="background: linear-gradient(135deg, #dc3545, #e85d75);">
+                    <div class="finance-value" id="operationalCost">Rp 0</div>
+                    <div>Biaya Operasional</div>
+                </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px;">
+                <div>
+                    <h3>📊 Ringkasan Transaksi Hari Ini</h3>
+                    <div id="dailyTransactions"></div>
+                </div>
+                <div>
+                    <h3>💎 Laporan Blockchain Verified</h3>
+                    <div id="blockchainFinancial"></div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <h3>📈 Grafik Pendapatan (Simulasi)</h3>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 15px; text-align: center;">
+                    <canvas id="revenueChart" width="400" height="200" style="max-width: 100%;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blockchain Records Tab -->
+        <div id="blockchain" class="content hidden">
+            <h2>⛓️ Live Blockchain Transaction Records</h2>
+            <p style="color: #666; margin-bottom: 25px;">Semua transaksi tercatat real-time tanpa pending</p>
+            
+            <div style="display: flex; gap: 20px; margin-bottom: 25px;">
+                <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; flex: 1; text-align: center;">
+                    <strong>Chain Length:</strong> <span id="chainLength">0</span>
+                </div>
+                <div style="background: #f3e5f5; padding: 15px; border-radius: 10px; flex: 1; text-align: center;">
+                    <strong>Total Transactions:</strong> <span id="chainTransactions">0</span>
+                </div>
+                <div style="background: #e8f5e8; padding: 15px; border-radius: 10px; flex: 1; text-align: center;">
+                    <strong>Chain Hash:</strong> <span id="chainHash">-</span>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-bottom: 20px;">
+                <button class="btn btn-success" onclick="validateBlockchain()">✅ Validate Chain Integrity</button>
+                <button class="btn btn-warning" onclick="exportBlockchainData()">📥 Export All Data</button>
+            </div>
+            
+            <div id="blockchainRecords"></div>
+        </div>
+
+        <!-- Implementation Tab -->
+        <div id="implementation" class="content hidden">
+            <h2>🔧 Cara Kerja MarketChain UMKM</h2>
+            
+            <div class="implementation-flow">
+                <h3>💡 Konsep Dasar</h3>
+                <p style="margin-bottom: 20px;">MarketChain UMKM menggunakan blockchain untuk mencatat setiap transaksi secara real-time, transparent, dan immutable (tidak bisa diubah).</p>
+                
+                <div class="flow-step">
+                    <div class="flow-number">1</div>
+                    <div>
+                        <strong>Customer memilih produk</strong><br>
+                        Customer browse produk UMKM dan menambahkan ke keranjang
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-number">2</div>
+                    <div>
+                        <strong>Instant Payment Processing</strong><br>
+                        Customer isi data dan pilih metode pembayaran, sistem langsung proses tanpa pending
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-number">3</div>
+                    <div>
+                        <strong>Real-time Blockchain Recording</strong><br>
+                        Transaksi langsung di-hash dan ditambahkan ke blockchain sebagai block baru
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-number">4</div>
+                    <div>
+                        <strong>Financial Integration</strong><br>
+                        Data transaksi otomatis masuk ke laporan keuangan (pendapatan, pajak, keuntungan)
+                    </div>
+                </div>
+                
+                <div class="flow-step">
+                    <div class="flow-number">5</div>
+                    <div>
+                        <strong>Immutable Record</strong><br>
+                        Data sudah tercatat permanen di blockchain dan bisa diaudit kapan saja
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Seller Dashboard Tab -->
-        <div id="seller" class="content hidden">
-            <h2>🏪 Dashboard Penjual - Tambah Produk</h2>
-            <p style="margin-bottom: 20px; color: #666;">Tambahkan produk UMKM Anda ke marketplace dan semua transaksi akan tercatat di blockchain</p>
             
-            <form onsubmit="addProduct(event)" style="max-width: 600px;">
-                <div class="form-group">
-                    <label>📦 Nama Produk:</label>
-                    <input type="text" id="productName" placeholder="Contoh: Batik Tulis Jogja" required>
-                </div>
-                <div class="form-group">
-                    <label>💰 Harga (Rp):</label>
-                    <input type="number" id="productPrice" placeholder="Contoh: 250000" required min="1000">
-                </div>
-                <div class="form-group">
-                    <label>📂 Kategori:</label>
-                    <select id="productCategory" required>
-                        <option value="">Pilih Kategori</option>
-                        <option value="Fashion">👗 Fashion</option>
-                        <option value="Makanan">🍜 Makanan</option>
-                        <option value="Minuman">🥤 Minuman</option>
-                        <option value="Kerajinan">🎨 Kerajinan</option>
-                        <option value="Elektronik">📱 Elektronik</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>📝 Deskripsi Produk:</label>
-                    <textarea id="productDescription" placeholder="Jelaskan produk Anda dengan detail..." rows="4" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label>📦 Stok Tersedia:</label>
-                    <input type="number" id="productStock" placeholder="Contoh: 50" required min="1">
-                </div>
-                <button type="submit" class="btn btn-success">➕ Tambah Produk ke Marketplace</button>
-            </form>
-
-            <div style="margin-top: 40px;">
-                <h3>📊 Produk Anda yang Dijual</h3>
-                <div id="sellerProducts"></div>
-            </div>
-        </div>
-
-        <!-- Blockchain Explorer Tab -->
-        <div id="blockchain" class="content hidden">
-            <h2>⛓️ Blockchain Explorer - Riwayat Transaksi</h2>
-            <p style="margin-bottom: 20px; color: #666;">Semua transaksi dicatat secara permanen dan transparan di blockchain</p>
-            
-            <div class="mining-status" id="miningStatus">
-                ✅ Blockchain siap menerima transaksi baru
+            <div style="background: #fff3cd; padding: 25px; border-radius: 15px; margin: 25px 0;">
+                <h4>🏗️ Implementasi Teknis</h4>
+                <ul style="padding-left: 20px; line-height: 2;">
+                    <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript (dapat diintegrasikan dengan React/Vue)</li>
+                    <li><strong>Blockchain:</strong> Custom lightweight blockchain dengan SHA-256 hashing</li>
+                    <li><strong>Database:</strong> Dapat menggunakan MongoDB/PostgreSQL untuk metadata</li>
+                    <li><strong>Payment Gateway:</strong> Integrasi dengan Midtrans, Xendit, atau Stripe</li>
+                    <li><strong>Backend:</strong> Node.js/Express atau PHP Laravel untuk API</li>
+                    <li><strong>Real-time:</strong> WebSocket untuk update status real-time</li>
+                </ul>
             </div>
             
-            <div style="text-align: center; margin-bottom: 30px;">
-                <button class="btn btn-warning" onclick="mineBlock()">⚡ Mine Block Pending</button>
-                <button class="btn btn-success" onclick="validateChain()">✅ Validasi Integritas Chain</button>
-                <button class="btn" onclick="exportBlockchain()">📥 Export Data Blockchain</button>
-            </div>
-            
-            <div style="display: flex; gap: 20px; margin-bottom: 20px;">
-                <div style="background: #e3f2fd; padding: 15px; border-radius: 10px; flex: 1; text-align: center;">
-                    <strong>Total Blocks:</strong> <span id="totalBlocksCount">1</span>
-                </div>
-                <div style="background: #f3e5f5; padding: 15px; border-radius: 10px; flex: 1; text-align: center;">
-                    <strong>Pending Transactions:</strong> <span id="pendingTxCount">0</span>
-                </div>
-                <div style="background: #e8f5e8; padding: 15px; border-radius: 10px; flex: 1; text-align: center;">
-                    <strong>Chain Status:</strong> <span id="chainStatus">Valid ✅</span>
-                </div>
-            </div>
-            
-            <h3>📋 Daftar Block Blockchain</h3>
-            <div id="blockchainView"></div>
-        </div>
-
-        <!-- Analytics Tab -->
-        <div id="analytics" class="content hidden">
-            <h2>📊 Analytics & Statistik Marketplace</h2>
-            <p style="margin-bottom: 30px; color: #666;">Dashboard lengkap aktivitas marketplace berbasis blockchain</p>
-            
-            <div class="stats">
-                <div class="stat-card">
-                    <div class="stat-value" id="totalProducts">0</div>
-                    <div class="stat-label">📦 Total Produk</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="totalTransactions">0</div>
-                    <div class="stat-label">💳 Total Transaksi</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="totalRevenue">Rp 0</div>
-                    <div class="stat-label">💰 Total Pendapatan</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="totalBlocks">1</div>
-                    <div class="stat-label">⛓️ Total Blocks</div>
-                </div>
-            </div>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
-                <div>
-                    <h3>📈 Transaksi Terbaru</h3>
-                    <div id="recentTransactions"></div>
-                </div>
-                <div>
-                    <h3>🏆 Produk Terlaris</h3>
-                    <div id="topProducts"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Help Tab -->
-        <div id="help" class="content hidden">
-            <h2>❓ Panduan Penggunaan MarketChain UMKM</h2>
-            
-            <div style="background: #e8f4fd; padding: 20px; border-radius: 15px; margin-bottom: 25px;">
-                <h3>🎯 Apa itu MarketChain UMKM?</h3>
-                <p>MarketChain UMKM adalah marketplace khusus untuk produk UMKM yang menggunakan teknologi blockchain untuk mencatat semua transaksi secara transparan dan aman. Setiap pembelian yang Anda lakukan akan tercatat permanen di blockchain.</p>
-            </div>
-
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-                <div style="background: white; padding: 20px; border-radius: 15px; border: 2px solid #e9ecef;">
-                    <h4>🛒 Cara Berbelanja</h4>
-                    <ol style="padding-left: 20px; line-height: 1.8;">
-                        <li>Pilih tab <strong>"Belanja"</strong></li>
-                        <li>Cari produk yang diinginkan</li>
-                        <li>Klik <strong>"Tambah ke Keranjang"</strong></li>
-                        <li>Isi data pengiriman lengkap</li>
-                        <li>Pilih metode pembayaran</li>
-                        <li>Klik <strong>"Proses Pembayaran"</strong></li>
-                        <li>Transaksi otomatis tercatat di blockchain!</li>
-                    </ol>
-                </div>
-
-                <div style="background: white; padding: 20px; border-radius: 15px; border: 2px solid #e9ecef;">
-                    <h4>🏪 Cara Menjual Produk</h4>
-                    <ol style="padding-left: 20px; line-height: 1.8;">
-                        <li>Pilih tab <strong>"Jual Produk"</strong></li>
-                        <li>Isi formulir produk dengan lengkap</li>
-                        <li>Pastikan foto dan deskripsi menarik</li>
-                        <li>Tentukan harga yang kompetitif</li>
-                        <li>Klik <strong>"Tambah Produk"</strong></li>
-                        <li>Produk langsung tampil di marketplace</li>
-                    </ol>
-                </div>
-
-                <div style="background: white; padding: 20px; border-radius: 15px; border: 2px solid #e9ecef;">
-                    <h4>⛓️ Memahami Blockchain</h4>
-                    <ul style="padding-left: 20px; line-height: 1.8;">
-                        <li><strong>Block:</strong> Wadah yang berisi data transaksi</li>
-                        <li><strong>Hash:</strong> Sidik jari unik setiap block</li>
-                        <li><strong>Mining:</strong> Proses validasi transaksi</li>
-                        <li><strong>Chain:</strong> Rangkaian block yang terhubung</li>
-                        <li>Data <strong>tidak bisa diubah</strong> setelah masuk blockchain</li>
-                    </ul>
-                </div>
-
-                <div style="background: white; padding: 20px; border-radius: 15px; border: 2px solid #e9ecef;">
-                    <h4>📊 Melihat Statistik</h4>
-                    <ul style="padding-left: 20px; line-height: 1.8;">
-                        <li>Lihat total produk dan transaksi</li>
-                        <li>Monitor pendapatan marketplace</li>
-                        <li>Cek riwayat transaksi terbaru</li>
-                        <li>Analisis produk terlaris</li>
-                        <li>Validasi integritas blockchain</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div style="background: #fff3cd; padding: 20px; border-radius: 15px; margin-top: 25px; border-left: 4px solid #ffc107;">
-                <h4>💡 Tips Penggunaan</h4>
-                <ul style="padding-left: 20px; line-height: 1.8;">
-                    <li>Selalu isi data pengiriman dengan lengkap dan benar</li>
-                    <li>Periksa kembali pesanan sebelum checkout</li>
-                    <li>Gunakan fitur pencarian untuk menemukan produk cepat</li>
-                    <li>Lihat riwayat blockchain untuk transparansi penuh</li>
-                    <li>Validasi chain secara berkala untuk memastikan integritas</li>
+            <div style="background: #d4edda; padding: 25px; border-radius: 15px;">
+                <h4>✅ Keunggulan Sistem Ini</h4>
+                <ul style="padding-left: 20px; line-height: 2;">
+                    <li><strong>Transparansi:</strong> Setiap transaksi dapat diverifikasi oleh siapa saja</li>
+                    <li><strong>Audit Trail:</strong> Riwayat lengkap tidak bisa dihapus atau dimanipulasi</li>
+                    <li><strong>Real-time:</strong> Tidak ada delay, transaksi langsung tercatat</li>
+                    <li><strong>Cost Effective:</strong> Tidak perlu cryptocurrency, menggunakan mata uang normal</li>
+                    <li><strong>UMKM Friendly:</strong> Interface sederhana, tidak perlu pengetahuan teknis</li>
+                    <li><strong>Compliance:</strong> Mendukung pelaporan pajak dan audit keuangan</li>
                 </ul>
             </div>
         </div>
     </div>
 
     <script>
-        // Enhanced Blockchain Implementation
-        class Block {
-            constructor(index, timestamp, data, previousHash) {
+        // Enhanced Real-time Blockchain System
+        class TransactionBlock {
+            constructor(index, timestamp, transactionData, previousHash) {
                 this.index = index;
                 this.timestamp = timestamp;
-                this.data = data;
-                this.previousHash = previousHash;
+                this.transactionData = transactionData;
+                this.previousHash = previousHash || "0";
                 this.nonce = 0;
                 this.hash = this.calculateHash();
             }
 
             calculateHash() {
-                return this.sha256(this.index + this.previousHash + this.timestamp + JSON.stringify(this.data) + this.nonce);
-            }
-
-            mineBlock(difficulty) {
-                const target = Array(difficulty + 1).join("0");
-                let attempts = 0;
-                
-                while (this.hash.substring(0, difficulty) !== target) {
-                    this.nonce++;
-                    attempts++;
-                    this.hash = this.calculateHash();
-                    
-                    // Update mining progress
-                    if (attempts % 1000 === 0) {
-                        updateMiningProgress(attempts);
-                    }
-                }
-                
-                return attempts;
+                return this.sha256(
+                    this.index +
+                    this.previousHash +
+                    this.timestamp +
+                    JSON.stringify(this.transactionData) +
+                    this.nonce
+                ).toString();
             }
 
             sha256(data) {
-                // Enhanced hash function with better distribution
+                // Enhanced SHA-256 simulation
                 let hash = 0;
                 let char;
                 for (let i = 0; i < data.length; i++) {
                     char = data.charCodeAt(i);
                     hash = ((hash << 5) - hash) + char;
-                    hash = hash & hash; // Convert to 32-bit integer
+                    hash = hash & hash;
                 }
                 
-                // Add additional complexity
-                hash = Math.abs(hash);
-                let result = hash.toString(16);
-                
-                // Ensure minimum length
-                while (result.length < 8) {
-                    result = '0' + result;
+                // Convert to positive hex with padding
+                const result = (Math.abs(hash) + Date.now()).toString(16).padStart(12, '0');
+                return result.substring(0, 12);
+            }
+
+            mineBlock(difficulty = 2) {
+                const target = Array(difficulty + 1).join("0");
+                while (this.hash.substring(0, difficulty) !== target) {
+                    this.nonce++;
+                    this.hash = this.calculateHash();
                 }
-                
-                return result;
+                return this.nonce;
             }
         }
 
-        class EnhancedBlockchain {
+        class RealTimeBlockchain {
             constructor() {
-                this.chain = [this.createGenesisBlock()];
-                this.difficulty = 3;
-                this.pendingTransactions = [];
-                this.miningReward = 100;
-                this.networkStats = {
-                    totalMined: 0,
-                    totalTransactions: 0,
-                    totalRevenue: 0
+                this.chain = [];
+                this.difficulty = 2;
+                this.financialData = {
+                    totalIncome: 0,
+                    totalProfit: 0,
+                    totalTax: 0,
+                    operationalCost: 0,
+                    dailyTransactions: []
                 };
             }
 
-            createGenesisBlock() {
-                return new Block(0, new Date().toISOString(), {
-                    type: "genesis",
-                    message: "Genesis Block - MarketChain UMKM Blockchain",
-                    creator: "System",
-                    version: "1.0"
-                }, "0");
-            }
-
             getLatestBlock() {
-                return this.chain[this.chain.length - 1];
+                return this.chain.length > 0 ? this.chain[this.chain.length - 1] : null;
             }
 
-            addTransaction(transaction) {
-                // Enhanced transaction validation
-                if (!transaction.customer || !transaction.items || transaction.total <= 0) {
-                    throw new Error("Invalid transaction data");
+            addTransactionBlock(transactionData) {
+                const timestamp = new Date().toISOString();
+                const previousHash = this.getLatestBlock() ? this.getLatestBlock().hash : "0";
+                
+                // Enhanced transaction data with financial calculations
+                const enhancedTransaction = {
+                    ...transactionData,
+                    transactionId: 'TXN-' + Date.now() + '-' + Math.random().toString(36).substr(2, 6),
+                    blockIndex: this.chain.length,
+                    status: 'CONFIRMED',
+                    tax: Math.round(transactionData.total * 0.11), // 11% tax
+                    platformFee: Math.round(transactionData.total * 0.025), // 2.5% platform fee
+                    sellerProfit: Math.round(transactionData.total * 0.865), // 86.5% to seller
+                    timestamp: timestamp
+                };
+
+                const newBlock = new TransactionBlock(
+                    this.chain.length,
+                    timestamp,
+                    enhancedTransaction,
+                    previousHash
+                );
+
+                // Mine the block
+                const miningAttempts = newBlock.mineBlock(this.difficulty);
+                
+                // Add to chain
+                this.chain.push(newBlock);
+                
+                // Update financial data
+                this.updateFinancialData(enhancedTransaction);
+                
+                // Update UI
+                this.updateBlockchainStatus();
+                
+                return {
+                    success: true,
+                    block: newBlock,
+                    transactionId: enhancedTransaction.transactionId,
+                    miningAttempts: miningAttempts
+                };
+            }
+
+            updateFinancialData(transaction) {
+                this.financialData.totalIncome += transaction.total;
+                this.financialData.totalTax += transaction.tax;
+                this.financialData.operationalCost += transaction.platformFee;
+                this.financialData.totalProfit += transaction.sellerProfit;
+                
+                // Add to daily transactions
+                const today = new Date().toISOString().split('T')[0];
+                const dailyTx = this.financialData.dailyTransactions.find(d => d.date === today);
+                if (dailyTx) {
+                    dailyTx.amount += transaction.total;
+                    dailyTx.count += 1;
+                } else {
+                    this.financialData.dailyTransactions.push({
+                        date: today,
+                        amount: transaction.total,
+                        count: 1
+                    });
                 }
-                
-                // Add transaction ID and timestamp
-                transaction.txId = 'TX-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
-                transaction.blockTimestamp = new Date().toISOString();
-                transaction.status = 'pending';
-                
-                this.pendingTransactions.push(transaction);
-                this.updateNetworkStats();
-                
-                showNotification('Transaksi berhasil ditambahkan ke pending pool', 'success');
-                return transaction.txId;
             }
 
-            minePendingTransactions() {
-                if (this.pendingTransactions.length === 0) {
-                    showNotification('Tidak ada transaksi pending untuk di-mine!', 'error');
-                    return false;
+            updateBlockchainStatus() {
+                document.getElementById('totalBlocks').textContent = this.chain.length;
+                document.getElementById('chainLength').textContent = this.chain.length;
+                document.getElementById('chainTransactions').textContent = this.chain.length;
+                
+                if (this.chain.length > 0) {
+                    const lastBlock = this.getLatestBlock();
+                    document.getElementById('lastBlockTime').textContent = new Date(lastBlock.timestamp).toLocaleString('id-ID');
+                    document.getElementById('chainHash').textContent = lastBlock.hash.substring(0, 8) + '...';
                 }
-
-                // Mark transactions as being processed
-                this.pendingTransactions.forEach(tx => tx.status = 'mining');
-
-                const miningStatusEl = document.getElementById('miningStatus');
-                miningStatusEl.className = 'mining-status mining';
-                miningStatusEl.innerHTML = '⚡ Sedang mining block baru... <div class="loading"></div>';
-
-                // Simulate mining process
-                setTimeout(() => {
-                    const block = new Block(
-                        this.chain.length,
-                        new Date().toISOString(),
-                        {
-                            type: "transactions",
-                            transactions: [...this.pendingTransactions],
-                            miner: "UMKM-Miner-" + Math.floor(Math.random() * 1000),
-                            reward: this.miningReward,
-                            transactionCount: this.pendingTransactions.length
-                        },
-                        this.getLatestBlock().hash
-                    );
-
-                    const attempts = block.mineBlock(this.difficulty);
-                    
-                    // Mark transactions as confirmed
-                    this.pendingTransactions.forEach(tx => tx.status = 'confirmed');
-                    
-                    this.chain.push(block);
-                    this.networkStats.totalMined++;
-                    
-                    // Calculate total revenue for this block
-                    const blockRevenue = this.pendingTransactions.reduce((sum, tx) => sum + tx.total, 0);
-                    this.networkStats.totalRevenue += blockRevenue;
-                    this.networkStats.totalTransactions += this.pendingTransactions.length;
-                    
-                    this.pendingTransactions = [];
-
-                    miningStatusEl.className = 'mining-status';
-                    miningStatusEl.innerHTML = `✅ Block #${block.index} berhasil di-mine! (${attempts} attempts)`;
-                    
-                    showNotification(`Block baru berhasil di-mine dengan ${block.data.transactionCount} transaksi!`, 'success');
-                    
-                    updateAllViews();
-                }, 2000 + Math.random() * 3000); // Realistic mining time
-
-                return true;
             }
 
-            isChainValid() {
+            validateChain() {
                 for (let i = 1; i < this.chain.length; i++) {
                     const currentBlock = this.chain[i];
                     const previousBlock = this.chain[i - 1];
 
                     if (currentBlock.hash !== currentBlock.calculateHash()) {
-                        return false;
+                        return { valid: false, error: `Block ${i} has invalid hash` };
                     }
 
                     if (currentBlock.previousHash !== previousBlock.hash) {
-                        return false;
-                    }
-
-                    // Additional validation for transaction data
-                    if (currentBlock.data.transactions) {
-                        for (let tx of currentBlock.data.transactions) {
-                            if (!tx.txId || !tx.customer || !tx.total) {
-                                return false;
-                            }
-                        }
+                        return { valid: false, error: `Block ${i} has invalid previous hash` };
                     }
                 }
-                return true;
-            }
-
-            getTransactionHistory() {
-                const allTransactions = [];
-                this.chain.forEach(block => {
-                    if (block.data.transactions) {
-                        block.data.transactions.forEach(tx => {
-                            allTransactions.push({
-                                ...tx,
-                                blockIndex: block.index,
-                                blockHash: block.hash,
-                                confirmed: true
-                            });
-                        });
-                    }
-                });
-                return allTransactions.reverse(); // Most recent first
-            }
-
-            updateNetworkStats() {
-                document.getElementById('pendingTxCount').textContent = this.pendingTransactions.length;
-                document.getElementById('totalBlocksCount').textContent = this.chain.length;
+                return { valid: true };
             }
 
             exportData() {
                 const exportData = {
                     blockchain: this.chain,
-                    stats: this.networkStats,
-                    exportTimestamp: new Date().toISOString(),
-                    version: "1.0"
+                    financialData: this.financialData,
+                    exportTime: new Date().toISOString(),
+                    totalBlocks: this.chain.length,
+                    chainValid: this.validateChain().valid
                 };
                 
                 const dataStr = JSON.stringify(exportData, null, 2);
-                const dataBlob = new Blob([dataStr], {type: 'application/json'});
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
                 const url = URL.createObjectURL(dataBlob);
                 
                 const link = document.createElement('a');
                 link.href = url;
-                link.download = `blockchain-export-${new Date().toISOString().split('T')[0]}.json`;
+                link.download = `marketchain-data-${new Date().toISOString().split('T')[0]}.json`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
                 
-                showNotification('Data blockchain berhasil di-export!', 'success');
+                showNotification('Data blockchain berhasil diekspor!', 'success');
             }
         }
 
         // Global Variables
-        let blockchain = new EnhancedBlockchain();
+        let blockchain = new RealTimeBlockchain();
         let products = [
-            { id: 1, name: "Batik Tulis Jogja Premium", price: 350000, category: "Fashion", description: "Batik tulis asli Yogyakarta dengan motif klasik Parang Rusak, dibuat oleh pengrajin berpengalaman 20 tahun", stock: 15, seller: "Batik Nusantara", emoji: "👘" },
-            { id: 2, name: "Keripik Singkong Balado", price: 25000, category: "Makanan", description: "Keripik singkong renyah dengan bumbu balado pedas manis khas Minang, tanpa pengawet", stock: 100, seller: "Kedai Ranah", emoji: "🌶️" },
-            { id: 3, name: "Tas Rajut Pandan Handmade", price: 125000, category: "Kerajinan", description: "Tas rajut dari pandan asli dengan teknik anyaman tradisional, tahan lama dan ramah lingkungan", stock: 25, seller: "Rajut Nusantara", emoji: "👜" },
-            { id: 4, name: "Kopi Robusta Temanggung", price: 65000, category: "Minuman", description: "Kopi robusta premium dari petani Temanggung, roasting medium dengan aroma khas dan rasa pahit yang seimbang", stock: 50, seller: "Kopi Pegunungan", emoji: "☕" },
-            { id: 5, name: "Sandal Kulit Magetan", price: 180000, category: "Fashion", description: "Sandal kulit asli buatan pengrajin Magetan dengan desain modern dan kualitas export", stock: 30, seller: "Leather Craft", emoji: "👡" },
-            { id: 6, name: "Dodol Garut Original", price: 35000, category: "Makanan", description: "Dodol khas Garut dengan rasa manis legit, dibuat dari bahan pilihan tanpa bahan kimia", stock: 75, seller: "Manisan Garut", emoji: "🍯" },
-            { id: 7, name: "Songket Palembang Eksklusif", price: 850000, category: "Fashion", description: "Songket Palembang dengan benang emas asli, motif tradisional untuk acara formal", stock: 8, seller: "Songket Heritage", emoji: "✨" },
-            { id: 8, name: "Gula Aren Organik", price: 45000, category: "Makanan", description: "Gula aren murni tanpa campuran, diolah secara tradisional oleh petani lokal", stock: 60, seller: "Aren Nusantara", emoji: "🍯" }
+            { id: 1, name: "Batik Tulis Jogja Premium", price: 350000, stock: 15, seller: "Batik Nusantara", emoji: "👘", cost: 200000 },
+            { id: 2, name: "Keripik Singkong Balado", price: 25000, stock: 100, seller: "Kedai Ranah", emoji: "🌶️", cost: 15000 },
+            { id: 3, name: "Tas Rajut Handmade", price: 125000, stock: 25, seller: "Rajut Nusantara", emoji: "👜", cost: 75000 },
+            { id: 4, name: "Kopi Robusta Premium", price: 65000, stock: 50, seller: "Kopi Pegunungan", emoji: "☕", cost: 35000 },
+            { id: 5, name: "Sandal Kulit Asli", price: 180000, stock: 30, seller: "Leather Craft", emoji: "👡", cost: 120000 },
         ];
-        
         let cart = [];
-        let filteredProducts = [...products];
-        let transactionId = 1;
 
-        // Enhanced UI Functions
+        // UI Functions
         function showTab(tabName, tabElement) {
-            // Hide all content
             document.querySelectorAll('.content').forEach(content => {
                 content.classList.add('hidden');
             });
             
-            // Remove active class from all tabs
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.classList.remove('active');
             });
             
-            // Show selected content and activate tab
             document.getElementById(tabName).classList.remove('hidden');
             tabElement.classList.add('active');
             
-            // Update views based on tab
-            switch(tabName) {
-                case 'marketplace':
-                    displayProducts();
-                    updateCart();
-                    break;
-                case 'seller':
-                    displaySellerProducts();
-                    break;
-                case 'blockchain':
-                    updateBlockchainView();
-                    blockchain.updateNetworkStats();
-                    break;
-                case 'analytics':
-                    updateAnalytics();
-                    break;
+            if (tabName === 'marketplace') {
+                displayProducts();
+                updateCart();
+            } else if (tabName === 'financial') {
+                updateFinancialReport();
+            } else if (tabName === 'blockchain') {
+                displayBlockchainRecords();
             }
         }
 
@@ -1033,81 +738,27 @@
             const productGrid = document.getElementById('productGrid');
             productGrid.innerHTML = '';
             
-            if (filteredProducts.length === 0) {
-                productGrid.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;"><h3>Tidak ada produk ditemukan</h3><p>Coba ubah filter pencarian Anda</p></div>';
-                return;
-            }
-            
-            filteredProducts.forEach(product => {
+            products.forEach(product => {
                 const productCard = document.createElement('div');
                 productCard.className = 'product-card';
                 productCard.innerHTML = `
-                    <div class="product-image">
-                        ${product.emoji}
-                        <div class="product-badge">${product.stock} stok</div>
-                    </div>
-                    <div class="product-title">${product.name}</div>
-                    <div class="product-price">Rp ${product.price.toLocaleString('id-ID')}</div>
-                    <div class="product-description">${product.description}</div>
-                    <div style="font-size: 12px; color: #888; margin-bottom: 10px;">
-                        🏪 ${product.seller} | 📂 ${product.category}
-                    </div>
-                    <button class="btn" onclick="addToCart(${product.id})" ${product.stock === 0 ? 'disabled' : ''}>
-                        ${product.stock === 0 ? '❌ Stok Habis' : '➕ Tambah ke Keranjang'}
+                    <div class="product-image">${product.emoji}</div>
+                    <h3>${product.name}</h3>
+                    <p style="font-weight: bold; color: #007bff; font-size: 1.3em;">Rp ${product.price.toLocaleString('id-ID')}</p>
+                    <p style="font-size: 12px; color: #666;">🏪 ${product.seller} | Stock: ${product.stock}</p>
+                    <button class="btn" onclick="addToCart(${product.id})">
+                        ➕ Tambah ke Keranjang
                     </button>
                 `;
                 productGrid.appendChild(productCard);
             });
         }
 
-        function filterProducts() {
-            const searchTerm = document.getElementById('searchProduct').value.toLowerCase();
-            const categoryFilter = document.getElementById('categoryFilter').value;
-            const priceFilter = document.getElementById('priceFilter').value;
-            
-            filteredProducts = products.filter(product => {
-                // Search filter
-                const matchesSearch = product.name.toLowerCase().includes(searchTerm) || 
-                                    product.description.toLowerCase().includes(searchTerm) ||
-                                    product.seller.toLowerCase().includes(searchTerm);
-                
-                // Category filter
-                const matchesCategory = !categoryFilter || product.category === categoryFilter;
-                
-                // Price filter
-                let matchesPrice = true;
-                if (priceFilter) {
-                    if (priceFilter === '0-50000') {
-                        matchesPrice = product.price < 50000;
-                    } else if (priceFilter === '50000-100000') {
-                        matchesPrice = product.price >= 50000 && product.price <= 100000;
-                    } else if (priceFilter === '100000-500000') {
-                        matchesPrice = product.price > 100000 && product.price <= 500000;
-                    } else if (priceFilter === '500000+') {
-                        matchesPrice = product.price > 500000;
-                    }
-                }
-                
-                return matchesSearch && matchesCategory && matchesPrice;
-            });
-            
-            displayProducts();
-        }
-
         function addToCart(productId) {
             const product = products.find(p => p.id === productId);
             const existingItem = cart.find(item => item.id === productId);
             
-            if (product.stock === 0) {
-                showNotification('Produk ini sedang habis stok!', 'error');
-                return;
-            }
-            
             if (existingItem) {
-                if (existingItem.quantity >= product.stock) {
-                    showNotification('Tidak bisa menambah lagi, stok terbatas!', 'error');
-                    return;
-                }
                 existingItem.quantity++;
             } else {
                 cart.push({ ...product, quantity: 1 });
@@ -1119,358 +770,218 @@
 
         function updateCart() {
             const cartDiv = document.getElementById('cart');
-            const cartCount = document.getElementById('cartCount');
-            const checkoutSection = document.getElementById('checkoutSection');
-            
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            cartCount.textContent = `${totalItems} item`;
+            const paymentSection = document.getElementById('paymentSection');
             
             if (cart.length === 0) {
-                cartDiv.innerHTML = '<div style="text-align: center; padding: 20px; color: #666;"><p>🛒 Keranjang belanja kosong</p><p>Yuk, mulai belanja produk UMKM!</p></div>';
-                checkoutSection.classList.add('hidden');
+                cartDiv.innerHTML = '<p style="text-align: center; color: #666;">Keranjang kosong</p>';
+                paymentSection.classList.add('hidden');
                 return;
             }
             
             let total = 0;
-            cartDiv.innerHTML = '<h4 style="margin-bottom: 15px;">📦 Item di Keranjang:</h4>';
+            let cartHTML = '<h3>🛒 Keranjang Belanja</h3>';
             
             cart.forEach(item => {
                 const itemTotal = item.price * item.quantity;
                 total += itemTotal;
                 
-                cartDiv.innerHTML += `
-                    <div class="cart-item">
+                cartHTML += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #eee;">
                         <div>
                             <strong>${item.name}</strong><br>
-                            <small>🏪 ${item.seller}</small><br>
-                            <span style="color: #007bff; font-weight: bold;">Rp ${item.price.toLocaleString('id-ID')}</span>
+                            <small>Rp ${item.price.toLocaleString('id-ID')} x ${item.quantity}</small>
                         </div>
-                        <div class="cart-controls">
-                            <div class="quantity-control">
-                                <button class="quantity-btn" onclick="changeQuantity(${item.id}, -1)">-</button>
-                                <span style="font-weight: bold; margin: 0 8px;">${item.quantity}</span>
-                                <button class="quantity-btn" onclick="changeQuantity(${item.id}, 1)">+</button>
-                            </div>
-                            <div style="text-align: right;">
-                                <div style="font-weight: bold;">Rp ${itemTotal.toLocaleString('id-ID')}</div>
-                                <button class="btn btn-danger" style="padding: 5px 10px; font-size: 12px;" onclick="removeFromCart(${item.id})">🗑️ Hapus</button>
-                            </div>
+                        <div>
+                            <strong>Rp ${itemTotal.toLocaleString('id-ID')}</strong>
+                            <button class="btn btn-danger" style="padding: 5px 10px; margin-left: 10px;" onclick="removeFromCart(${item.id})">❌</button>
                         </div>
                     </div>
                 `;
             });
             
-            cartDiv.innerHTML += `
-                <div style="text-align: center; margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px;">
-                    <div style="font-size: 18px; font-weight: bold; color: #333;">Total Pembayaran</div>
-                    <div style="font-size: 24px; font-weight: bold; color: #007bff;">Rp ${total.toLocaleString('id-ID')}</div>
+            cartHTML += `
+                <div style="text-align: center; margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 10px;">
+                    <h4>Total: Rp ${total.toLocaleString('id-ID')}</h4>
                 </div>
             `;
             
-            checkoutSection.classList.remove('hidden');
-        }
-
-        function changeQuantity(productId, change) {
-            const cartItem = cart.find(item => item.id === productId);
-            const product = products.find(p => p.id === productId);
-            
-            if (cartItem) {
-                const newQuantity = cartItem.quantity + change;
-                
-                if (newQuantity <= 0) {
-                    removeFromCart(productId);
-                } else if (newQuantity > product.stock) {
-                    showNotification('Jumlah melebihi stok yang tersedia!', 'error');
-                } else {
-                    cartItem.quantity = newQuantity;
-                    updateCart();
-                }
-            }
+            cartDiv.innerHTML = cartHTML;
+            paymentSection.classList.remove('hidden');
         }
 
         function removeFromCart(productId) {
             cart = cart.filter(item => item.id !== productId);
             updateCart();
-            showNotification('Item dihapus dari keranjang', 'info');
         }
 
-        function processCheckout() {
+        function processInstantPayment() {
             if (cart.length === 0) {
                 showNotification('Keranjang kosong!', 'error');
                 return;
             }
             
-            // Validate form
-            const customerName = document.getElementById('customerName').value.trim();
-            const customerAddress = document.getElementById('customerAddress').value.trim();
-            const customerPhone = document.getElementById('customerPhone').value.trim();
+            const buyerName = document.getElementById('buyerName').value.trim();
+            const buyerEmail = document.getElementById('buyerEmail').value.trim();
+            const buyerPhone = document.getElementById('buyerPhone').value.trim();
+            const buyerAddress = document.getElementById('buyerAddress').value.trim();
             const paymentMethod = document.getElementById('paymentMethod').value;
             
-            if (!customerName || !customerAddress || !customerPhone) {
-                showNotification('Mohon lengkapi semua data pengiriman!', 'error');
+            if (!buyerName || !buyerEmail || !buyerPhone || !buyerAddress) {
+                showNotification('Mohon lengkapi semua data pembeli!', 'error');
                 return;
             }
             
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             
-            const transaction = {
-                id: transactionId++,
-                timestamp: new Date().toISOString(),
-                type: "purchase",
-                items: [...cart],
-                total: total,
-                customer: {
-                    name: customerName,
-                    address: customerAddress,
-                    phone: customerPhone
-                },
-                paymentMethod: paymentMethod,
-                status: "processing",
-                shippingFee: 15000,
-                grandTotal: total + 15000,
-                orderNumber: `ORDER-${Date.now()}`,
-                estimatedDelivery: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
-            };
-            
-            try {
-                const txId = blockchain.addTransaction(transaction);
-                
-                // Update stock
-                cart.forEach(cartItem => {
-                    const product = products.find(p => p.id === cartItem.id);
-                    if (product) {
-                        product.stock -= cartItem.quantity;
-                    }
-                });
-                
-                // Clear cart and form
-                cart = [];
-                document.getElementById('customerName').value = '';
-                document.getElementById('customerAddress').value = '';
-                document.getElementById('customerPhone').value = '';
-                
-                updateCart();
-                
-                showNotification(`Pesanan berhasil diproses! Order: ${transaction.orderNumber}`, 'success');
-                
-                // Show order summary
-                alert(`🎉 Pesanan Berhasil Diproses!\n\n` +
-                      `📋 Order: ${transaction.orderNumber}\n` +
-                      `💰 Total: Rp ${transaction.grandTotal.toLocaleString('id-ID')}\n` +
-                      `🚚 Estimasi Tiba: ${transaction.estimatedDelivery}\n` +
-                      `🔗 Transaction ID: ${txId}\n\n` +
-                      `Transaksi telah dicatat di blockchain untuk transparansi penuh!`);
-                
-            } catch (error) {
-                showNotification('Terjadi kesalahan saat memproses pesanan: ' + error.message, 'error');
-            }
-        }
-
-        function addProduct(event) {
-            event.preventDefault();
-            
-            const name = document.getElementById('productName').value.trim();
-            const price = parseInt(document.getElementById('productPrice').value);
-            const category = document.getElementById('productCategory').value;
-            const description = document.getElementById('productDescription').value.trim();
-            const stock = parseInt(document.getElementById('productStock').value);
-            
-            if (!name || !price || !category || !description || !stock) {
-                showNotification('Mohon lengkapi semua field!', 'error');
-                return;
-            }
-            
-            // Category emoji mapping
-            const categoryEmojis = {
-                'Fashion': '👗',
-                'Makanan': '🍜',
-                'Minuman': '🥤',
-                'Kerajinan': '🎨',
-                'Elektronik': '📱'
-            };
-            
-            const newProduct = {
-                id: products.length + 1,
-                name: name,
-                price: price,
-                category: category,
-                description: description,
-                stock: stock,
-                seller: `Seller-${Math.floor(Math.random() * 1000)}`,
-                emoji: categoryEmojis[category] || '📦'
-            };
-            
-            products.push(newProduct);
-            filteredProducts = [...products]; // Update filtered products
-            
-            // Reset form
-            event.target.reset();
-            
-            showNotification('Produk berhasil ditambahkan ke marketplace!', 'success');
-            displayProducts();
-            displaySellerProducts();
-        }
-
-        function displaySellerProducts() {
-            const sellerProductsDiv = document.getElementById('sellerProducts');
-            const userProducts = products.slice(-5); // Show last 5 products as "user's products"
-            
-            if (userProducts.length === 0) {
-                sellerProductsDiv.innerHTML = '<p style="text-align: center; color: #666;">Belum ada produk yang Anda jual</p>';
-                return;
-            }
-            
-            sellerProductsDiv.innerHTML = userProducts.map(product => `
-                <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #dee2e6;">
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <strong>${product.name}</strong><br>
-                            <span style="color: #007bff;">Rp ${product.price.toLocaleString('id-ID')}</span> | 
-                            <span style="color: ${product.stock > 0 ? '#28a745' : '#dc3545'};">Stok: ${product.stock}</span>
-                        </div>
-                        <div>
-                            <button class="btn" style="padding: 5px 10px; font-size: 12px;">✏️ Edit</button>
-                        </div>
+            // Show payment processing
+            const resultDiv = document.getElementById('paymentResult');
+            resultDiv.innerHTML = `
+                <div class="payment-processing">
+                    <h3>⚡ Memproses Pembayaran...</h3>
+                    <p>Sedang mencatat transaksi ke blockchain...</p>
+                    <div style="margin: 20px 0;">
+                        <div style="display: inline-block; width: 30px; height: 30px; border: 3px solid #f3f3f3; border-top: 3px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite;"></div>
                     </div>
                 </div>
-            `).join('');
-        }
-
-        function mineBlock() {
-            blockchain.minePendingTransactions();
-        }
-
-        function validateChain() {
-            const isValid = blockchain.isChainValid();
-            const chainStatusEl = document.getElementById('chainStatus');
+            `;
             
-            if (isValid) {
-                chainStatusEl.innerHTML = 'Valid ✅';
-                chainStatusEl.style.color = '#28a745';
-                showNotification('✅ Blockchain valid dan aman!', 'success');
-            } else {
-                chainStatusEl.innerHTML = 'Invalid ❌';
-                chainStatusEl.style.color = '#dc3545';
-                showNotification('❌ Blockchain tidak valid! Ada masalah dengan integritas data.', 'error');
-            }
-        }
-
-        function exportBlockchain() {
-            blockchain.exportData();
-        }
-
-        function updateBlockchainView() {
-            const blockchainView = document.getElementById('blockchainView');
-            blockchainView.innerHTML = '';
-            
-            [...blockchain.chain].reverse().forEach(block => {
-                const blockDiv = document.createElement('div');
-                blockDiv.className = 'block';
+            // Process payment after delay (simulate real payment)
+            setTimeout(() => {
+                const transactionData = {
+                    buyerInfo: {
+                        name: buyerName,
+                        email: buyerEmail,
+                        phone: buyerPhone,
+                        address: buyerAddress
+                    },
+                    items: [...cart],
+                    total: total,
+                    paymentMethod: paymentMethod,
+                    orderNumber: 'ORDER-' + Date.now(),
+                    processingTime: new Date().toISOString()
+                };
                 
-                let transactionsHtml = '';
-                if (block.data.transactions) {
-                    block.data.transactions.forEach(tx => {
-                        transactionsHtml += `
-                            <div class="transaction">
-                                <strong>💳 ${tx.orderNumber || tx.txId}</strong><br>
-                                👤 Customer: ${tx.customer.name || tx.customer}<br>
-                                📱 Phone: ${tx.customer.phone || 'N/A'}<br>
-                                💰 Total: Rp ${tx.grandTotal ? tx.grandTotal.toLocaleString('id-ID') : tx.total.toLocaleString('id-ID')}<br>
-                                💳 Payment: ${tx.paymentMethod || 'N/A'}<br>
-                                📦 Items: ${tx.items.map(item => `${item.name} (${item.quantity})`).join(', ')}<br>
-                                🕒 ${new Date(tx.timestamp).toLocaleString('id-ID')}
-                            </div>
-                        `;
+                // Add to blockchain
+                const result = blockchain.addTransactionBlock(transactionData);
+                
+                if (result.success) {
+                    // Update product stocks
+                    cart.forEach(cartItem => {
+                        const product = products.find(p => p.id === cartItem.id);
+                        if (product) {
+                            product.stock -= cartItem.quantity;
+                        }
                     });
-                } else {
-                    transactionsHtml = `<div class="transaction">📋 ${block.data.message || 'Genesis Block'}</div>`;
+                    
+                    // Success message
+                    resultDiv.innerHTML = `
+                        <div class="payment-success">
+                            <h3>✅ Pembayaran Berhasil!</h3>
+                            <p><strong>Order Number:</strong> ${transactionData.orderNumber}</p>
+                            <p><strong>Transaction ID:</strong> ${result.transactionId}</p>
+                            <p><strong>Total:</strong> Rp ${total.toLocaleString('id-ID')}</p>
+                            <p><strong>Block Hash:</strong> ${result.block.hash}</p>
+                            <p><strong>Mining Attempts:</strong> ${result.miningAttempts}</p>
+                            <p>✅ <strong>Transaksi telah tercatat permanen di blockchain!</strong></p>
+                        </div>
+                    `;
+                    
+                    // Clear cart and form
+                    cart = [];
+                    document.getElementById('buyerName').value = '';
+                    document.getElementById('buyerEmail').value = '';
+                    document.getElementById('buyerPhone').value = '';
+                    document.getElementById('buyerAddress').value = '';
+                    
+                    updateCart();
+                    updateFinancialReport();
+                    
+                    showNotification(`Pembayaran berhasil! Transaksi tercatat di Block #${result.block.index}`, 'success');
                 }
-                
-                blockDiv.innerHTML = `
+            }, 2000);
+        }
+
+        function updateFinancialReport() {
+            const financial = blockchain.financialData;
+            
+            document.getElementById('totalIncome').textContent = `Rp ${financial.totalIncome.toLocaleString('id-ID')}`;
+            document.getElementById('totalProfit').textContent = `Rp ${financial.totalProfit.toLocaleString('id-ID')}`;
+            document.getElementById('totalTax').textContent = `Rp ${financial.totalTax.toLocaleString('id-ID')}`;
+            document.getElementById('operationalCost').textContent = `Rp ${financial.operationalCost.toLocaleString('id-ID')}`;
+            
+            // Daily transactions
+            const dailyDiv = document.getElementById('dailyTransactions');
+            if (financial.dailyTransactions.length === 0) {
+                dailyDiv.innerHTML = '<p style="color: #666;">Belum ada transaksi hari ini</p>';
+            } else {
+                dailyDiv.innerHTML = financial.dailyTransactions.map(day => `
+                    <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 10px;">
+                        <strong>📅 ${day.date}</strong><br>
+                        💰 Rp ${day.amount.toLocaleString('id-ID')} (${day.count} transaksi)
+                    </div>
+                `).join('');
+            }
+            
+            // Blockchain financial verification
+            const blockchainFinDiv = document.getElementById('blockchainFinancial');
+            const verifiedTotal = blockchain.chain.reduce((sum, block) => sum + (block.transactionData.total || 0), 0);
+            blockchainFinDiv.innerHTML = `
+                <div style="background: #e8f5e8; padding: 15px; border-radius: 10px;">
+                    <strong>✅ Verified by Blockchain</strong><br>
+                    💎 Total Verified: Rp ${verifiedTotal.toLocaleString('id-ID')}<br>
+                    ⛓️ Blocks: ${blockchain.chain.length}<br>
+                    🔒 Status: ${blockchain.validateChain().valid ? 'VALID' : 'INVALID'}
+                </div>
+            `;
+        }
+
+        function displayBlockchainRecords() {
+            const recordsDiv = document.getElementById('blockchainRecords');
+            
+            if (blockchain.chain.length === 0) {
+                recordsDiv.innerHTML = '<p style="text-align: center; color: #666;">Belum ada transaksi tercatat</p>';
+                return;
+            }
+            
+            recordsDiv.innerHTML = blockchain.chain.slice().reverse().map(block => `
+                <div class="block">
                     <div class="block-header">
-                        <span class="block-index">Block #${block.index}</span>
+                        <strong>Block #${block.index}</strong>
                         <span>${new Date(block.timestamp).toLocaleString('id-ID')}</span>
                     </div>
                     <div style="margin-bottom: 15px;">
-                        <div><strong>🔗 Hash:</strong> <code style="background: #e9ecef; padding: 2px 6px; border-radius: 3px;">${block.hash}</code></div>
-                        <div><strong>🔗 Previous Hash:</strong> <code style="background: #e9ecef; padding: 2px 6px; border-radius: 3px;">${block.previousHash}</code></div>
-                        <div><strong>⚡ Nonce:</strong> ${block.nonce}</div>
-                        ${block.data.miner ? `<div><strong>⛏️ Miner:</strong> ${block.data.miner}</div>` : ''}
-                        ${block.data.transactionCount ? `<div><strong>📊 Transaction Count:</strong> ${block.data.transactionCount}</div>` : ''}
+                        <strong>🔗 Hash:</strong> <code>${block.hash}</code><br>
+                        <strong>🔗 Previous Hash:</strong> <code>${block.previousHash}</code><br>
+                        <strong>⚡ Nonce:</strong> ${block.nonce}
                     </div>
-                    <div><strong>📋 Data:</strong></div>
-                    ${transactionsHtml}
-                `;
-                
-                blockchainView.appendChild(blockDiv);
-            });
-        }
-
-        function updateAnalytics() {
-            const totalProducts = products.length;
-            const transactionHistory = blockchain.getTransactionHistory();
-            const totalTransactions = transactionHistory.length;
-            const totalRevenue = blockchain.networkStats.totalRevenue;
-            const totalBlocks = blockchain.chain.length;
-            
-            document.getElementById('totalProducts').textContent = totalProducts;
-            document.getElementById('totalTransactions').textContent = totalTransactions;
-            document.getElementById('totalRevenue').textContent = `Rp ${totalRevenue.toLocaleString('id-ID')}`;
-            document.getElementById('totalBlocks').textContent = totalBlocks;
-            
-            // Recent transactions
-            const recentTransactionsDiv = document.getElementById('recentTransactions');
-            recentTransactionsDiv.innerHTML = '';
-            
-            const recentTx = transactionHistory.slice(0, 5);
-            if (recentTx.length === 0) {
-                recentTransactionsDiv.innerHTML = '<div style="text-align: center; color: #666; padding: 20px;">Belum ada transaksi</div>';
-            } else {
-                recentTx.forEach(tx => {
-                    recentTransactionsDiv.innerHTML += `
-                        <div class="transaction">
-                            <strong>${tx.orderNumber || tx.txId}</strong> (Block #${tx.blockIndex})<br>
-                            👤 ${tx.customer.name || tx.customer}<br>
-                            💰 Rp ${(tx.grandTotal || tx.total).toLocaleString('id-ID')}<br>
-                            📅 ${new Date(tx.timestamp).toLocaleString('id-ID')}
-                        </div>
-                    `;
-                });
-            }
-            
-            // Top products (simulated data)
-            const topProductsDiv = document.getElementById('topProducts');
-            const topProducts = products.slice(0, 5);
-            topProductsDiv.innerHTML = topProducts.map((product, index) => `
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px; background: #f8f9fa; border-radius: 8px; margin-bottom: 5px;">
-                    <div>
-                        <div style="font-weight: bold;">${index + 1}. ${product.name}</div>
-                        <div style="font-size: 12px; color: #666;">${product.category} - ${product.seller}</div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="font-weight: bold; color: #007bff;">Rp ${product.price.toLocaleString('id-ID')}</div>
-                        <div style="font-size: 12px; color: #666;">${Math.floor(Math.random() * 50) + 10} terjual</div>
+                    <div class="transaction-detail">
+                        <strong>💳 Transaction ID:</strong> ${block.transactionData.transactionId}<br>
+                        <strong>📦 Order:</strong> ${block.transactionData.orderNumber}<br>
+                        <strong>👤 Buyer:</strong> ${block.transactionData.buyerInfo.name} (${block.transactionData.buyerInfo.email})<br>
+                        <strong>💰 Total:</strong> Rp ${block.transactionData.total.toLocaleString('id-ID')}<br>
+                        <strong>💳 Payment:</strong> ${block.transactionData.paymentMethod}<br>
+                        <strong>📊 Tax (11%):</strong> Rp ${block.transactionData.tax.toLocaleString('id-ID')}<br>
+                        <strong>🏪 Seller Profit:</strong> Rp ${block.transactionData.sellerProfit.toLocaleString('id-ID')}<br>
+                        <strong>📦 Items:</strong> ${block.transactionData.items.map(item => `${item.name} (${item.quantity})`).join(', ')}
                     </div>
                 </div>
             `).join('');
         }
 
-        function updateAllViews() {
-            updateBlockchainView();
-            updateAnalytics();
-            blockchain.updateNetworkStats();
-            displayProducts();
-        }
-
-        function updateMiningProgress(attempts) {
-            const miningStatusEl = document.getElementById('miningStatus');
-            if (miningStatusEl.classList.contains('mining')) {
-                miningStatusEl.innerHTML = `⚡ Mining in progress... (${attempts} attempts) <div class="loading"></div>`;
+        function validateBlockchain() {
+            const result = blockchain.validateChain();
+            if (result.valid) {
+                showNotification('✅ Blockchain integrity validated successfully!', 'success');
+            } else {
+                showNotification(`❌ Blockchain validation failed: ${result.error}`, 'error');
             }
         }
 
+        function exportBlockchainData() {
+            blockchain.exportData();
+        }
+
         function showNotification(message, type = 'info') {
-            // Remove existing notifications
             document.querySelectorAll('.notification').forEach(n => n.remove());
             
             const notification = document.createElement('div');
@@ -1478,7 +989,6 @@
             notification.textContent = message;
             document.body.appendChild(notification);
             
-            // Auto remove after 4 seconds
             setTimeout(() => {
                 if (notification.parentNode) {
                     notification.parentNode.removeChild(notification);
@@ -1486,23 +996,20 @@
             }, 4000);
         }
 
-        // Initialize application
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             displayProducts();
             updateCart();
-            blockchain.updateNetworkStats();
+            updateFinancialReport();
+            blockchain.updateBlockchainStatus();
             
-            // Welcome message for new users
-            setTimeout(() => {
-                showNotification('Selamat datang di MarketChain UMKM! Mulai belanja produk lokal dengan teknologi blockchain.', 'info');
-            }, 1000);
+            // Add CSS for loading animation
+            const style = document.createElement('style');
+            style.textContent = '@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }';
+            document.head.appendChild(style);
+            
+            showNotification('MarketChain UMKM siap! Setiap transaksi akan langsung tercatat ke blockchain.', 'info');
         });
-
-        // Auto-save functionality (in real implementation, this would sync with backend)
-        setInterval(() => {
-            // Simulate auto-save
-            console.log('Auto-saving application state...');
-        }, 30000);
     </script>
 </body>
 </html>
