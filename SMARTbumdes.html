@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BUMDES-SMART - Sistem Manajemen dan Analitik Cerdas untuk BUMDes</title>
+    <title>BUMDES-SMART - Sistem Manajemen BUMDes Luwu Utara</title>
     <style>
         * {
             margin: 0;
@@ -15,10 +15,11 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
+            background: #f8f9fa;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -28,14 +29,10 @@
             background: linear-gradient(135deg, #2c5aa0 0%, #1e3c72 100%);
             color: white;
             padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
 
-        nav {
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -54,272 +51,300 @@
             font-size: 2rem;
         }
 
-        .nav-links {
-            list-style: none;
+        .user-info {
             display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .nav-links li {
-            margin-left: 2rem;
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
 
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #ffd700;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 120px 0 80px;
-            text-align: center;
-            margin-top: 70px;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            animation: fadeInUp 1s ease 0.2s both;
-        }
-
-        .cta-button {
+        .btn-primary {
             background: #ff6b6b;
             color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-            animation: fadeInUp 1s ease 0.4s both;
         }
 
-        .cta-button:hover {
+        .btn-primary:hover {
             background: #ff5252;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255,107,107,0.3);
         }
 
-        /* Features Section */
-        .features {
-            padding: 80px 0;
-            background: #f8f9fa;
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 1px solid white;
         }
 
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
+        .btn-secondary:hover {
+            background: white;
             color: #2c5aa0;
         }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .feature-card {
+        /* Navigation */
+        .nav-tabs {
             background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-bottom: 2px solid #e9ecef;
+            padding: 0;
         }
 
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        .nav-tabs ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
         }
 
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+        .nav-tabs li {
+            margin: 0;
         }
 
-        .feature-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 1rem;
+        .nav-tabs a {
+            display: block;
+            padding: 15px 25px;
+            text-decoration: none;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tabs a:hover,
+        .nav-tabs a.active {
             color: #2c5aa0;
+            border-bottom-color: #2c5aa0;
         }
 
-        /* Stats Section */
-        .stats {
-            background: linear-gradient(135deg, #2c5aa0 0%, #1e3c72 100%);
-            color: white;
-            padding: 60px 0;
+        /* Main Content */
+        .main-content {
+            padding: 30px 0;
         }
 
-        .stats-grid {
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Dashboard */
+        .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            text-align: center;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
         }
 
-        .stat-item h3 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            color: #ffd700;
-        }
-
-        .stat-item p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        /* Modules Section */
-        .modules {
-            padding: 80px 0;
+        .stat-card {
             background: white;
-        }
-
-        .modules-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .module-card {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 15px;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             text-align: center;
             transition: transform 0.3s ease;
         }
 
-        .module-card:nth-child(2) {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        .stat-card:hover {
+            transform: translateY(-5px);
         }
 
-        .module-card:nth-child(3) {
-            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        .stat-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
         }
 
-        .module-card:nth-child(4) {
-            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c5aa0;
+            margin-bottom: 5px;
         }
 
-        .module-card:nth-child(5) {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            color: #333;
+        .stat-card .label {
+            color: #666;
+            font-size: 0.9rem;
         }
 
-        .module-card:nth-child(6) {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-            color: #333;
+        /* Charts */
+        .chart-container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
         }
 
-        .module-card:hover {
-            transform: scale(1.05);
+        .chart-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: #2c5aa0;
         }
 
-        .module-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
+        /* Tables */
+        .table-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
 
-        /* Market Section */
-        .market {
-            padding: 80px 0;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c5aa0;
+        }
+
+        tr:hover {
             background: #f8f9fa;
         }
 
-        .market-content {
+        /* Forms */
+        .form-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
         }
 
-        .market-text {
-            font-size: 1.1rem;
+        .form-group {
+            margin-bottom: 20px;
         }
 
-        .market-stats {
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        /* Cards */
+        .card {
             background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
         }
 
-        .market-stat {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-            border-bottom: 1px solid #eee;
+        .card-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #e9ecef;
+            background: #f8f9fa;
+            border-radius: 10px 10px 0 0;
         }
 
-        .market-stat:last-child {
-            border-bottom: none;
+        .card-title {
+            font-size: 1.2rem;
+            color: #2c5aa0;
+            margin: 0;
         }
 
-        /* Partnership Section */
-        .partnership {
-            padding: 80px 0;
-            background: white;
+        .card-body {
+            padding: 25px;
         }
 
-        .partner-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+        /* Progress bars */
+        .progress {
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
         }
 
-        .partner-item {
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #2c5aa0, #4facfe);
+            transition: width 0.3s ease;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .alert-info {
+            background: #cce5ff;
+            color: #004085;
+            border: 1px solid #99d3ff;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-tabs ul {
+                flex-wrap: wrap;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Chart Placeholder */
+        .chart-placeholder {
+            height: 300px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
-            padding: 2rem;
-            border-radius: 15px;
-            text-align: center;
+            font-size: 1.2rem;
         }
 
-        /* Footer */
-        footer {
-            background: #2c5aa0;
-            color: white;
-            padding: 40px 0 20px;
-            text-align: center;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            color: #ffd700;
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
+        /* Animation */
+        @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -327,269 +352,395 @@
             }
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .market-content {
-                grid-template-columns: 1fr;
-            }
-
-            .features-grid,
-            .modules-grid {
-                grid-template-columns: 1fr;
-            }
+        .tab-content.active {
+            animation: slideIn 0.5s ease;
         }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header>
-        <nav class="container">
-            <div class="logo">BUMDES-SMART</div>
-            <ul class="nav-links">
-                <li><a href="#home">Beranda</a></li>
-                <li><a href="#features">Fitur</a></li>
-                <li><a href="#modules">Modul</a></li>
-                <li><a href="#market">Pasar</a></li>
-                <li><a href="#partnership">Kemitraan</a></li>
-            </ul>
-        </nav>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">BUMDES-SMART Luwu Utara</div>
+                <div class="user-info">
+                    <span>📍 Kabupaten Luwu Utara, Sulawesi Selatan</span>
+                    <button class="btn btn-secondary" onclick="showAlert('Logout berhasil!')">Logout</button>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
+    <!-- Navigation -->
+    <nav class="nav-tabs">
         <div class="container">
-            <h1>BUMDES-SMART</h1>
-            <p>Sistem Manajemen dan Analitik Cerdas untuk Badan Usaha Milik Desa</p>
-            <p>Solusi terintegrasi berbasis cloud computing untuk pengelolaan BUMDes yang efisien, transparan, dan profitable</p>
-            <a href="#features" class="cta-button">Jelajahi Fitur</a>
+            <ul>
+                <li><a href="#dashboard" class="nav-link active" onclick="showTab('dashboard', this)">📊 Dashboard</a></li>
+                <li><a href="#business" class="nav-link" onclick="showTab('business', this)">🏢 Unit Usaha</a></li>
+                <li><a href="#finance" class="nav-link" onclick="showTab('finance', this)">💼 Keuangan</a></li>
+                <li><a href="#assets" class="nav-link" onclick="showTab('assets', this)">📦 Aset & Inventori</a></li>
+                <li><a href="#marketing" class="nav-link" onclick="showTab('marketing', this)">📈 Marketing</a></li>
+                <li><a href="#community" class="nav-link" onclick="showTab('community', this)">👥 Komunitas</a></li>
+                <li><a href="#reports" class="nav-link" onclick="showTab('reports', this)">📋 Laporan</a></li>
+            </ul>
         </div>
-    </section>
+    </nav>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <div class="container">
-            <h2 class="section-title">Mengapa Memilih BUMDES-SMART?</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">☁️</div>
-                    <h3>Cloud Computing</h3>
-                    <p>Sistem berbasis cloud yang dapat diakses kapan saja, dimana saja dengan keamanan data terjamin</p>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="main-content">
+            
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-content active">
+                <div class="alert alert-info">
+                    <strong>Selamat Datang!</strong> Sistem BUMDES-SMART untuk wilayah Luwu Utara telah aktif. Periode: Januari 2025
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📱</div>
-                    <h3>Responsive Design</h3>
-                    <p>Interface yang user-friendly dengan teknologi Vue.js dan Laravel, cocok untuk pengguna dengan literasi digital terbatas</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3>Real-time Analytics</h3>
-                    <p>Laporan keuangan dan analisis bisnis real-time sesuai standar akuntansi UMKM</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3>Transparansi Penuh</h3>
-                    <p>Meningkatkan transparansi laporan hingga 85% dengan sistem otomatis</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">💰</div>
-                    <h3>Peningkatan Omzet</h3>
-                    <p>Terbukti meningkatkan omzet rata-rata BUMDes hingga 35%</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Efisiensi Tinggi</h3>
-                    <p>Meningkatkan efisiensi pengelolaan keuangan hingga 60%</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <h3>74,954</h3>
-                    <p>Total Desa Potensial</p>
-                </div>
-                <div class="stat-item">
-                    <h3>45,549</h3>
-                    <p>BUMDes Aktif Saat Ini</p>
-                </div>
-                <div class="stat-item">
-                    <h3>Rp 22.5M</h3>
-                    <p>Total Addressable Market</p>
-                </div>
-                <div class="stat-item">
-                    <h3>TKT 6</h3>
-                    <p>Technology Readiness Level</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Modules Section -->
-    <section class="modules" id="modules">
-        <div class="container">
-            <h2 class="section-title">6 Modul Terintegrasi</h2>
-            <div class="modules-grid">
-                <div class="module-card">
-                    <h3>🏢 Business Unit Management</h3>
-                    <p>Mengelola berbagai unit usaha BUMDes seperti simpan pinjam, perdagangan, dan jasa dalam satu platform terpadu</p>
-                </div>
-                <div class="module-card">
-                    <h3>💼 Financial Management System</h3>
-                    <p>Pencatatan keuangan otomatis dan laporan keuangan real-time sesuai standar akuntansi UMKM</p>
-                </div>
-                <div class="module-card">
-                    <h3>📦 Asset & Inventory Management</h3>
-                    <p>Pengelolaan aset desa dan inventori produk dengan tracking yang akurat dan efisien</p>
-                </div>
-                <div class="module-card">
-                    <h3>📈 Marketing Analytics Module</h3>
-                    <p>Menganalisis performa penjualan dan memberikan rekomendasi strategi pemasaran berbasis data</p>
-                </div>
-                <div class="module-card">
-                    <h3>👥 Community Engagement Platform</h3>
-                    <p>Menghubungkan BUMDes dengan warga desa untuk meningkatkan partisipasi dan keterlibatan masyarakat</p>
-                </div>
-                <div class="module-card">
-                    <h3>📋 Government Reporting System</h3>
-                    <p>Menghasilkan laporan otomatis untuk pemerintah desa dan kabupaten sesuai regulasi yang berlaku</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Market Section -->
-    <section class="market" id="market">
-        <div class="container">
-            <h2 class="section-title">Potensi Pasar</h2>
-            <div class="market-content">
-                <div class="market-text">
-                    <p>BUMDES-SMART menargetkan pasar potensial yang sangat besar dengan 74.954 desa di Indonesia yang memiliki potensi pembentukan BUMDes. Saat ini baru 45.549 BUMDes yang aktif beroperasi, menunjukkan peluang pertumbuhan yang signifikan.</p>
-                    <br>
-                    <p>Segmentasi primer mencakup BUMDes yang mengelola unit usaha dengan omzet di atas Rp 50 juta per tahun, sementara pasar sekunder meliputi koperasi desa dan UMKM berbasis komunitas.</p>
-                    <br>
-                    <p>Dengan dukungan program pemerintah dan alokasi dana desa sebesar Rp 400 triliun, digitalisasi ekonomi desa menjadi prioritas utama dalam pengembangan BUMDes sebagai motor ekonomi desa.</p>
-                </div>
-                <div class="market-stats">
-                    <div class="market-stat">
-                        <span><strong>Total Addressable Market</strong></span>
-                        <span><strong>Rp 22.5 Miliar</strong></span>
+                
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <div class="icon">💰</div>
+                        <div class="value" id="total-omzet">Rp 125,000,000</div>
+                        <div class="label">Total Omzet Bulan Ini</div>
                     </div>
-                    <div class="market-stat">
-                        <span><strong>Serviceable Market (5 tahun)</strong></span>
-                        <span><strong>Rp 6.8 Miliar</strong></span>
+                    <div class="stat-card">
+                        <div class="icon">📈</div>
+                        <div class="value" id="growth">+35%</div>
+                        <div class="label">Pertumbuhan vs Bulan Lalu</div>
                     </div>
-                    <div class="market-stat">
-                        <span><strong>Pricing Model</strong></span>
-                        <span><strong>Rp 500K - 1.5M/tahun</strong></span>
+                    <div class="stat-card">
+                        <div class="icon">🏪</div>
+                        <div class="value" id="active-units">8</div>
+                        <div class="label">Unit Usaha Aktif</div>
                     </div>
-                    <div class="market-stat">
-                        <span><strong>Target Pilot</strong></span>
-                        <span><strong>50 BUMDes</strong></span>
+                    <div class="stat-card">
+                        <div class="icon">👨‍👩‍👧‍👦</div>
+                        <div class="value" id="members">1,247</div>
+                        <div class="label">Anggota Aktif</div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3 class="chart-title">Trend Omzet 6 Bulan Terakhir</h3>
+                    <canvas id="revenueChart" style="height: 300px;"></canvas>
+                    <div class="chart-placeholder" id="revenue-placeholder">
+                        📊 Chart Omzet: Ags: 85jt, Sep: 92jt, Okt: 98jt, Nov: 110jt, Des: 118jt, Jan: 125jt
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Unit Usaha Terpopuler</h3>
+                        </div>
+                        <div class="card-body">
+                            <div style="margin-bottom: 15px;">
+                                <strong>Simpan Pinjam</strong>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 85%;"></div>
+                                </div>
+                                <small>Kontribusi: 85% dari total omzet</small>
+                            </div>
+                            <div style="margin-bottom: 15px;">
+                                <strong>Toko Kelontong</strong>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 60%;"></div>
+                                </div>
+                                <small>Kontribusi: 60% dari target</small>
+                            </div>
+                            <div>
+                                <strong>Jasa Penggilingan Padi</strong>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 45%;"></div>
+                                </div>
+                                <small>Kontribusi: 45% dari target</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Aktivitas Terbaru</h3>
+                        </div>
+                        <div class="card-body">
+                            <div style="border-left: 3px solid #2c5aa0; padding-left: 15px; margin-bottom: 15px;">
+                                <strong>Transaksi Simpan Pinjam</strong><br>
+                                <small>Pak Ahmad - Pinjaman Rp 5,000,000 • 2 jam lalu</small>
+                            </div>
+                            <div style="border-left: 3px solid #28a745; padding-left: 15px; margin-bottom: 15px;">
+                                <strong>Penjualan Toko</strong><br>
+                                <small>Pembelian sembako Rp 150,000 • 4 jam lalu</small>
+                            </div>
+                            <div style="border-left: 3px solid #ffc107; padding-left: 15px;">
+                                <strong>Pembayaran Angsuran</strong><br>
+                                <small>Ibu Siti - Angsuran ke-3 Rp 500,000 • 6 jam lalu</small>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Partnership Section -->
-    <section class="partnership" id="partnership">
-        <div class="container">
-            <h2 class="section-title">Mitra Strategis</h2>
-            <div class="partner-list">
-                <div class="partner-item">
-                    <h3>🏛️ Pemerintah Daerah</h3>
-                    <p>Dinas Pemberdayaan Masyarakat dan Desa, Pengendalian Penduduk dan KB, Pemberdayaan Perempuan dan Perlindungan Anak Kabupaten Barru</p>
+            <!-- Business Unit Tab -->
+            <div id="business" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Manajemen Unit Usaha BUMDes Luwu Utara</h3>
+                        <button class="btn btn-primary" onclick="addBusinessUnit()">+ Tambah Unit Usaha</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table id="business-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nama Unit Usaha</th>
+                                        <th>Jenis</th>
+                                        <th>Modal Awal</th>
+                                        <th>Omzet Bulan Ini</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Simpan Pinjam Makmur</td>
+                                        <td>Jasa Keuangan</td>
+                                        <td>Rp 50,000,000</td>
+                                        <td>Rp 75,000,000</td>
+                                        <td><span style="background: #d4edda; color: #155724; padding: 3px 10px; border-radius: 15px;">Aktif</span></td>
+                                        <td>
+                                            <button class="btn" onclick="editBusinessUnit('Simpan Pinjam Makmur')" style="background: #ffc107; color: white; padding: 5px 10px; margin-right: 5px;">Edit</button>
+                                            <button class="btn" onclick="viewDetails('Simpan Pinjam Makmur')" style="background: #17a2b8; color: white; padding: 5px 10px;">Detail</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Toko Kelontong Sejahtera</td>
+                                        <td>Perdagangan</td>
+                                        <td>Rp 25,000,000</td>
+                                        <td>Rp 18,500,000</td>
+                                        <td><span style="background: #d4edda; color: #155724; padding: 3px 10px; border-radius: 15px;">Aktif</span></td>
+                                        <td>
+                                            <button class="btn" onclick="editBusinessUnit('Toko Kelontong')" style="background: #ffc107; color: white; padding: 5px 10px; margin-right: 5px;">Edit</button>
+                                            <button class="btn" onclick="viewDetails('Toko Kelontong')" style="background: #17a2b8; color: white; padding: 5px 10px;">Detail</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Penggilingan Padi Berkah</td>
+                                        <td>Jasa Produksi</td>
+                                        <td>Rp 35,000,000</td>
+                                        <td>Rp 12,800,000</td>
+                                        <td><span style="background: #d4edda; color: #155724; padding: 3px 10px; border-radius: 15px;">Aktif</span></td>
+                                        <td>
+                                            <button class="btn" onclick="editBusinessUnit('Penggilingan Padi')" style="background: #ffc107; color: white; padding: 5px 10px; margin-right: 5px;">Edit</button>
+                                            <button class="btn" onclick="viewDetails('Penggilingan Padi')" style="background: #17a2b8; color: white; padding: 5px 10px;">Detail</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-                <div class="partner-item">
-                    <h3>🌏 Pemerintah Provinsi</h3>
-                    <p>Dinas Pemberdayaan Masyarakat dan Desa Provinsi Sulawesi Selatan</p>
+
+                <!-- Form untuk menambah unit usaha -->
+                <div class="card" id="add-business-form" style="display: none;">
+                    <div class="card-header">
+                        <h3 class="card-title">Tambah Unit Usaha Baru</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Nama Unit Usaha</label>
+                                <input type="text" id="unit-name" placeholder="Contoh: Warung Sembako Maju">
+                            </div>
+                            <div class="form-group">
+                                <label>Jenis Usaha</label>
+                                <select id="unit-type">
+                                    <option>Pilih Jenis Usaha</option>
+                                    <option>Jasa Keuangan</option>
+                                    <option>Perdagangan</option>
+                                    <option>Jasa Produksi</option>
+                                    <option>Pariwisata</option>
+                                    <option>Pertanian</option>
+                                    <option>Peternakan</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Modal Awal (Rp)</label>
+                                <input type="number" id="unit-capital" placeholder="50000000">
+                            </div>
+                            <div class="form-group">
+                                <label>Target Omzet Bulanan (Rp)</label>
+                                <input type="number" id="unit-target" placeholder="20000000">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Deskripsi Usaha</label>
+                            <textarea id="unit-description" placeholder="Jelaskan detail unit usaha ini..."></textarea>
+                        </div>
+                        <div style="text-align: right;">
+                            <button class="btn btn-secondary" onclick="cancelAddUnit()">Batal</button>
+                            <button class="btn btn-primary" onclick="saveBusinessUnit()">Simpan Unit Usaha</button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>BUMDES-SMART</h3>
-                    <p>Sistem Manajemen dan Analitik Cerdas untuk Badan Usaha Milik Desa. Memberdayakan ekonomi desa melalui teknologi digital.</p>
+            <!-- Finance Tab -->
+            <div id="finance" class="tab-content">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 25px;">
+                    <div class="stat-card">
+                        <div class="icon">💰</div>
+                        <div class="value">Rp 245,750,000</div>
+                        <div class="label">Total Aset</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon">📊</div>
+                        <div class="value">Rp 125,300,000</div>
+                        <div class="label">Pendapatan Bulan Ini</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon">💸</div>
+                        <div class="value">Rp 78,500,000</div>
+                        <div class="label">Total Pengeluaran</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="icon">📈</div>
+                        <div class="value">Rp 46,800,000</div>
+                        <div class="label">Keuntungan Bersih</div>
+                    </div>
                 </div>
-                <div class="footer-section">
-                    <h3>Kontak</h3>
-                    <p>Email: info@bumdes-smart.id</p>
-                    <p>Telp: (021) 1234-5678</p>
-                    <p>Alamat: Jakarta, Indonesia</p>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Laporan Keuangan Real-time</h3>
+                        <button class="btn btn-primary" onclick="exportFinanceReport()">📄 Export Laporan</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Tanggal</th>
+                                        <th>Keterangan</th>
+                                        <th>Unit Usaha</th>
+                                        <th>Debit</th>
+                                        <th>Kredit</th>
+                                        <th>Saldo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>25/01/2025</td>
+                                        <td>Penjualan Toko Kelontong</td>
+                                        <td>Toko Sejahtera</td>
+                                        <td>Rp 750,000</td>
+                                        <td>-</td>
+                                        <td>Rp 125,300,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>25/01/2025</td>
+                                        <td>Angsuran Pinjaman</td>
+                                        <td>Simpan Pinjam</td>
+                                        <td>Rp 2,500,000</td>
+                                        <td>-</td>
+                                        <td>Rp 124,550,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>24/01/2025</td>
+                                        <td>Pembelian Stok Barang</td>
+                                        <td>Toko Sejahtera</td>
+                                        <td>-</td>
+                                        <td>Rp 3,200,000</td>
+                                        <td>Rp 122,050,000</td>
+                                    </tr>
+                                    <tr>
+                                        <td>24/01/2025</td>
+                                        <td>Pencairan Pinjaman Baru</td>
+                                        <td>Simpan Pinjam</td>
+                                        <td>-</td>
+                                        <td>Rp 15,000,000</td>
+                                        <td>Rp 125,250,000</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-                <div class="footer-section">
-                    <h3>Layanan</h3>
-                    <p>• Implementasi Sistem</p>
-                    <p>• Training & Pendampingan</p>
-                    <p>• Support & Maintenance</p>
-                    <p>• Konsultasi BUMDes</p>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Input Transaksi Keuangan</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Tanggal Transaksi</label>
+                                <input type="date" id="transaction-date" value="2025-01-25">
+                            </div>
+                            <div class="form-group">
+                                <label>Unit Usaha</label>
+                                <select id="transaction-unit">
+                                    <option>Simpan Pinjam Makmur</option>
+                                    <option>Toko Kelontong Sejahtera</option>
+                                    <option>Penggilingan Padi Berkah</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Jenis Transaksi</label>
+                                <select id="transaction-type" onchange="updateTransactionForm()">
+                                    <option>Pendapatan</option>
+                                    <option>Pengeluaran</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Jumlah (Rp)</label>
+                                <input type="number" id="transaction-amount" placeholder="100000">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Keterangan</label>
+                            <textarea id="transaction-description" placeholder="Jelaskan detail transaksi..."></textarea>
+                        </div>
+                        <button class="btn btn-primary" onclick="addTransaction()">💾 Simpan Transaksi</button>
+                    </div>
                 </div>
             </div>
-            <hr style="margin: 20px 0; opacity: 0.3;">
-            <p>&copy; 2025 BUMDES-SMART. Semua hak cipta dilindungi.</p>
-        </div>
-    </footer>
 
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Add scroll effect to header
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 100) {
-                header.style.backgroundColor = 'rgba(44, 90, 160, 0.95)';
-            } else {
-                header.style.backgroundColor = '';
-            }
-        });
-
-        // Animate stats on scroll
-        function animateStats() {
-            const stats = document.querySelectorAll('.stat-item h3');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const target = entry.target;
-                        const finalValue = target.textContent;
-                        
-                        // Simple animation for demonstration
-                        target.style.transform = 'scale(1.1)';
-                        setTimeout(() => {
-                            target.style.transform = 'scale(1)';
-                        }, 300);
-                    }
-                });
-            });
-
-            stats.forEach(stat => observer.observe(stat));
-        }
-
-        animateStats();
-    </script>
-</body>
-</html>
+            <!-- Assets Tab -->
+            <div id="assets" class="tab-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Manajemen Aset & Inventori</h3>
+                        <button class="btn btn-primary" onclick="addAsset()">+ Tambah Aset</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Kode Aset</th>
+                                        <th>Nama Aset</th>
+                                        <th>Kategori</th>
+                                        <th>Nilai Aset</th>
+                                        <th>Kondisi</th>
+                                        <th>Lokasi</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>AST-001</td>
+                                        <td>Mesin Giling Padi</td>
+                                        <td>Peralatan</td>
+                                        <td>Rp 25,000,000</td>
+                                        <td><span style="background: #d4edda; color: #155724; padding: 3px 10px; border-radius: 15px;">Baik</span></td>
+                                        <td>Gudang Unit A</td>
+                                        <td>Aktif</td>
+                                    </tr>
+                                    <tr>
+                                        <td>AST-002</td>
+                                        <td>Kendaraan Operasional</td>
+                                        <td>Transportasi</td>
+                                        <td>Rp 85,000,000</td>
+                                        <td><span style="background: #d4edda; color: #155724; padding: 3px 10px; border-radius: 15px;">Baik</span></td>
+                                        <td>Garasi BUMDes</td>
+                                        <td>Aktif</td>
+                                    </tr>
